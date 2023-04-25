@@ -46,12 +46,12 @@ model.add(layers.Conv2D(128, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
 model.add(layers.Conv2D(128, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(256, (2, 2), activation="relu"))
+model.add(layers.Conv2D(512, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(256, (2, 2), activation="relu"))
+model.add(layers.Conv2D(512, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(256, (2, 2), activation="relu"))
-model.add(layers.MaxPool2D((2, 2)))
+model.add(layers.Conv2D(512, (2, 2), activation="relu"))
+model.add(layers.MaxPool2D((3, 3)))
 
 model.add(layers.Flatten())
 
@@ -63,7 +63,7 @@ model.add(layers.Dense(2, activation="softmax"))
 
 model.summary()
 
-model.compile(optimizer="adam",#adamax,
+model.compile(optimizer="adamax",#adamax,
               loss="SparseCategoricalCrossentropy",
               metrics=["accuracy"])
 
@@ -71,7 +71,7 @@ history = model.fit(train_images,
                     train_labels,
                     validation_split = 0.1,
                     epochs = 25,
-                    batch_size= 30)
+                    batch_size= 20)
 
 history.history.keys()
 
