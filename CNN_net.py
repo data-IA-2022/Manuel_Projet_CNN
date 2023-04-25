@@ -16,7 +16,7 @@ from tensorflow.keras import layers
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
-SIZE=128
+SIZE=160
 
 with open("dataset_" + str(SIZE)+".pickle", "rb") as f:
     data = pickle.load(f)
@@ -48,7 +48,9 @@ model.add(layers.Conv2D(128, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
 model.add(layers.Conv2D(256, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(64, (2, 2), activation="relu"))
+model.add(layers.Conv2D(256, (2, 2), activation="relu"))
+model.add(layers.MaxPool2D((2, 2)))
+model.add(layers.Conv2D(256, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
 
 model.add(layers.Flatten())
@@ -67,9 +69,9 @@ model.compile(optimizer="adam",#adamax,
 
 history = model.fit(train_images,
                     train_labels,
-                    validation_split = 0.2,
+                    validation_split = 0.1,
                     epochs = 25,
-                    batch_size= 20)
+                    batch_size= 30)
 
 history.history.keys()
 

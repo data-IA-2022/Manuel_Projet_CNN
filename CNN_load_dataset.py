@@ -17,8 +17,7 @@ import pickle
 
 path = "Dataset/PetImages"
 
-SIZE_list=[32, 64, 128,224]
-
+SIZE_list=[32, 64, 128, 160, 224]
 
 import os
 
