@@ -2,17 +2,15 @@
 """
 Created on Mon Apr 24 11:31:46 2023
 
-@author: Utilisateur
+@author: arscg
 """
 
 import pandas as pd
-# import cv2
 import pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
 from tensorflow.keras import models
 from tensorflow.keras import layers
-# from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
@@ -33,12 +31,6 @@ train_labels = le.fit_transform(np.array(train_df['labels'].to_list()))
 test_images = np.array(test_df['images'].to_list())#/ 255.0
 test_labels = le.fit_transform(np.array(test_df['labels'].to_list()))
 
-
-# train_label_proportions = train_df['labels'].value_counts(normalize=True)
-# test_label_proportions = test_df['labels'].value_counts(normalize=True)
-# print('Proportions des labels dans l\'ensemble d\'entraînement:\n', train_label_proportions)
-# print('Proportions des labels dans l\'ensemble de test:\n', test_label_proportions)
-
 model = models.Sequential()
 model.add(layers.Conv2D(64, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
 model.add(layers.MaxPool2D((2, 2)))
@@ -46,9 +38,9 @@ model.add(layers.Conv2D(128, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
 model.add(layers.Conv2D(128, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(512, (2, 2), activation="relu"))
+model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
 model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(512, (2, 2), activation="relu"))
+model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
 model.add(layers.MaxPool2D((2, 2)))
 model.add(layers.Conv2D(512, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((3, 3)))
@@ -57,8 +49,6 @@ model.add(layers.Flatten())
 
 model.add(layers.Dense(64, activation="relu"))
 model.add(layers.Dense(64, activation="relu"))
-# model.add(layers.Dense(64, activation="relu"))
-# model.add(layers.Dense(32, activation="relu"))
 model.add(layers.Dense(2, activation="softmax"))
 
 model.summary()
@@ -69,9 +59,9 @@ model.compile(optimizer="adamax",#adamax,
 
 history = model.fit(train_images,
                     train_labels,
-                    validation_split = 0.1,
+                    validation_split = 0.2,
                     epochs = 25,
-                    batch_size= 20)
+                    batch_size= 15)
 
 history.history.keys()
 
@@ -86,4 +76,6 @@ plt.show()
 print()
 print('test_omages :')
 model.evaluate(test_images, test_labels)
+
+model.save('model_.h5')
 
