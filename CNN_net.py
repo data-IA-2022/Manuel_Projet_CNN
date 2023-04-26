@@ -81,4 +81,4 @@ with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
 
 model.save('model_.h5')
-
+ 
