@@ -32,15 +32,15 @@ test_images = np.array(test_df['images'].to_list())#/ 255.0
 test_labels = le.fit_transform(np.array(test_df['labels'].to_list()))
 
 model = models.Sequential()
-model.add(layers.Conv2D(80, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
+model.add(layers.Conv2D(65, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
 model.add(layers.MaxPool2D((2, 2)))
 model.add(layers.Conv2D(128, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(256, (2, 2), activation="sigmoid"))
-model.add(layers.MaxPool2D((2, 2)))
-model.add(layers.Conv2D(512, (2, 2), activation="relu"))
+model.add(layers.Conv2D(256, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
 model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
+model.add(layers.MaxPool2D((2, 2)))
+model.add(layers.Conv2D(512, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((2, 2)))
 model.add(layers.Conv2D(512, (2, 2), activation="relu"))
 model.add(layers.MaxPool2D((3, 3)))
@@ -61,7 +61,7 @@ history = model.fit(train_images,
                     train_labels,
                     validation_split = 0.2,
                     epochs = 25,
-                    batch_size= 5)
+                    batch_size= 20)
 
 history.history.keys()
 
@@ -81,4 +81,4 @@ with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
 
 model.save('model_.h5')
- 
+
