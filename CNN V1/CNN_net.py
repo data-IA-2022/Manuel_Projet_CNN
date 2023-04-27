@@ -9,8 +9,7 @@ import pandas as pd
 import pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
-from tensorflow.keras import models
-from tensorflow.keras import layers
+from tensorflow.keras import models, backend, layers
 from sklearn.preprocessing import LabelEncoder
 import matplotlib.pyplot as plt
 
@@ -81,4 +80,7 @@ with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
 
 model.save('model_.h5')
+
+#vidage de la mémoire video du GPU
+backend.clear_session()
 
