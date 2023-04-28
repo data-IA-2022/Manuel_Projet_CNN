@@ -6,7 +6,8 @@ Created on Thu Oct 13 12:32:38 2022
 """
 
 import tensorflow as tf
-from tensorflow.keras.applications.resnet import ResNet50 
+from tensorflow.keras.applications.inception_v3 import InceptionV3
+ 
 import pandas as pd 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -38,7 +39,7 @@ def initialize():
     test_images = np.array(test_df['images'].to_list())#/ 255.0
     test_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
 
-    model = ResNet50 (include_top=True,
+    model = InceptionV3 (include_top=True,
                       weights=None,
                       input_tensor=None,
                       input_shape=(SIZE,SIZE,3),
@@ -65,7 +66,7 @@ def process(model, train_images, train_labels, test_images, test_labels):
                         train_labels,
                         validation_split = 0.2,
                         epochs = 25,
-                        batch_size= 10)
+                        batch_size= 40)
 
     return history
  
@@ -73,7 +74,7 @@ print(tf.test.is_gpu_available())
 
 model,train_images, train_labels, test_images, test_labels = initialize()
 history = process(model, train_images, train_labels, test_images, test_labels)
-model.save('model_resnet50.h5')
+model.save('model_inceptionV3.h5')
 
 plt.figure()
 plt.plot(history.history["accuracy"])
