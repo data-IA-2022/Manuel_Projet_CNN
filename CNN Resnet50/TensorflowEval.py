@@ -6,7 +6,7 @@ Created on Thu Oct 13 12:32:38 2022
 """
 
 import tensorflow as tf
-from tensorflow.keras.applications.resnet import ResNet101, ResNet50 
+from tensorflow.keras.applications.resnet import ResNet50 
 import pandas as pd 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
