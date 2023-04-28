@@ -39,10 +39,7 @@ model = Sequential()
 
 model.add(ResNet50 (include_top=False,
                   weights="imagenet",
-                  input_tensor=None,
-                  input_shape=(SIZE,SIZE,3),
-                  pooling='max',
-                  classes=np.max(train_labels+1)))
+                  pooling='avg'))
 
 model.add(Dense(2, activation = 'softmax'))
 model.layers[0].trainable = False
@@ -61,6 +58,7 @@ history = model.fit(train_images,
                     epochs = 25,
                     batch_size= 10)
 
+
 model.save('model_resnet50_Transfère_Learning.h5')
 
 plt.figure()
@@ -70,6 +68,17 @@ plt.ylim(0.5, 1)
 plt.yticks(np.arange(0.5, 1.1, 0.1))
 plt.legend(["training_"+ str(np.max(train_labels+1)), "test"])
 plt.show()
+
+plt.figure()
+plt.plot(history.history["accuracy"])
+plt.plot(history.history["val_accuracy"])
+plt.ylim(0.8, 1)
+plt.yticks(np.arange(0.8, 1.1, 0.1))
+plt.legend(["training_"+ str(np.max(train_labels+1)), "test"])
+plt.show()
+
+with open('history.pickle', 'wb') as f:
+    pickle.dump(history.history, f)
 
 model.evaluate(test_images, test_labels) 
 
