@@ -15,9 +15,10 @@ import cv2
 import pickle
 
 
-path = "Dataset/PetImages"
+path = "../../Dataset/PetImages"
 
-SIZE_list=[32, 64, 128, 160, 224]
+SIZE_list=[32, 64, 128, 160, 224, 299]
+SIZE_list=[299]
 
 import os
 
@@ -27,7 +28,7 @@ for SIZE in SIZE_list:
     labels = []
 
         
-    for folder in os.listdir("Dataset/PetImages"):
+    for folder in os.listdir(path):
         for file_name in os.listdir(path+"/" + folder):
             if file_name.endswith(".jpg"):
                 try:

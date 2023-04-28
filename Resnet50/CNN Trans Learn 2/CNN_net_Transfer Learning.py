@@ -39,10 +39,7 @@ model = Sequential()
 
 model.add(ResNet50 (include_top=False,
                   weights="imagenet",
-                  input_tensor=None,
-                  input_shape=(SIZE,SIZE,3),
-                  pooling='max',
-                  classes=np.max(train_labels+1)))
+                  pooling='avg'))
 
 # model.add(Flatten())
 
