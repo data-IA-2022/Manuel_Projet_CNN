@@ -2,45 +2,37 @@ import datetime
 import streamlit as st
 import plotly.express as px
 # import numpy as np
-import index
+import Accueil as index
 import cv2
 
 st.title("Chargement de l'image !")
 
-# Using object notation
-# add_selectbox = st.sidebar.selectbox(
-#     "How would you like to be contacted?",
-#     ("Email", "Home phone", "Mobile phone")
-# )
-
-lst = ["Image 1", "Image 2", "Image 3"]
 # Using "with" notation
 with st.sidebar:
     add_radio = st.radio(
         "Choose image :",
-        lst
+        index.lst,
+        index = st.session_state.selector_type_image
     )
-    
-    
-# windspeed_range = st.sidebar.slider('Valeurs de vitesse du vent', min(df['windspeed']), max(df['windspeed']),
-#                                     [min(df['windspeed']), max(df['windspeed'])])
-
-
- 
-if add_radio == lst[0]:
-    ld_image = index.load_image()
-elif add_radio == lst[1]:
-    ld_image = index.load_image_2()
+     
+if add_radio == index.lst[0]:
+    ld_image = index.img1 # index.load_image()
+    st.session_state.selector_type_image=0
+elif add_radio == index.lst[1]:
+    ld_image = index.img2 # index.load_image_2()
+    st.session_state.selector_type_image=1
 else:
-    images, labels =index.load_test_images()
-    hum_range = st.slider("Choose image :", 0, len(images), 10)
+    hum_range = st.slider("Choose image :", 0, len(index.images), st.session_state.index_image)
     st.title(hum_range)
-    ld_image=images[hum_range]
+    ld_image=index.images[hum_range]
     ld_image = cv2.cvtColor(ld_image, cv2.COLOR_BGR2RGB)
-
-# if add_radio != lst[2]:
-
-col1, col2, col3 = st.columns(3)
+    st.session_state.selector_type_image=2
+    st.session_state.index_image = hum_range
+ 
+if ld_image.shape != (160, 160, 3):
+    col1, col2,col3 = st.columns(3)
+else:
+    col1, col2 = st.columns(2)
 
 img_resized = cv2.resize(ld_image, (160, 160))    
 
@@ -50,6 +42,13 @@ with col1:
 if ld_image.shape != (160, 160, 3):
     with col2:
         st.image(ld_image, caption='Sunrise by the mountains')
+        st.image(ld_image, caption='Sunrise by the mountains')
+    with col3:
+        st.image(st.session_state.model_graf, caption='Sunrise by the mountains')
+else:
+    with col2:
+        st.image(st.session_state.model_graf, caption='Sunrise by the mountains')
+
 
 
 

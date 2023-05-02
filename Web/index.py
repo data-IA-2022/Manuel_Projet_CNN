@@ -33,6 +33,24 @@ def load_image_2():
     return img
 
 @st.cache(suppress_st_warning=True)
+def load_model():
+    from tensorflow.keras.models import load_model
+    
+    model = load_model('model_.h5')
+        
+    return model
+    
+@st.cache(suppress_st_warning=True)
+def load_model_graf(model):
+    from tensorflow.keras.utils import plot_model
+    import cv2
+    
+    plot_model(model, to_file='modele.png', show_shapes=True)    
+    graf = cv2.imread('modele.png')
+   
+    return graf
+
+@st.cache(suppress_st_warning=True)
 def load_test_images(SIZE=160, SEED=31):
     # import cv2
     import pickle
@@ -58,6 +76,6 @@ def load_test_images(SIZE=160, SEED=31):
 
     return test_images, test_labels
 
-def load_model(path):
-    model = load(path)
-    return model
+# def load_model(path):
+#     model = load(path)
+#     return model

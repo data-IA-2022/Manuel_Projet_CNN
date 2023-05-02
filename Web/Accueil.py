@@ -3,11 +3,25 @@ import pandas as pd
 from joblib import load
 import index
 
-index.load_image()
-index.load_image_2()
-# index.load_test_images()
+lst = ["Image 1", "Image 2", "Image 3"]
+
+img1 = index.load_image()
+img2 =index.load_image_2()
+images, labels =index.load_test_images()
 
 st.title("Bienvenue sur la webapp ! 👋")
+
+if 'model' not in st.session_state:
+    st.session_state['model'] = index.load_model()
+    
+if 'model_graf' not in st.session_state:
+    st.session_state['model_graf'] = index.load_model_graf(st.session_state['model'])
+    
+if 'index_image' not in st.session_state:
+    st.session_state['index_image'] = 10
+
+if 'selector_type_image' not in st.session_state:
+    st.session_state['selector_type_image'] = 2
 
 # # Initialization
 # if 'key' not in st.session_state:
