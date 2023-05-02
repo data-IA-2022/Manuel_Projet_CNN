@@ -45,8 +45,8 @@ def initialize():
     test_images = np.array(test_df['images'].to_list())#/ 255.0
     test_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
 
-    model = ResNet50 (include_top=True,
-                      weights=None,
+    model = ResNet50 (include_top=False,
+                      weights='imagenet',
                       input_tensor=None,
                       input_shape=(SIZE,SIZE,3),
                       pooling='max',

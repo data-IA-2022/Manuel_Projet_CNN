@@ -6,7 +6,8 @@ Created on Thu Oct 13 12:32:38 2022
 """
 
 import tensorflow as tf
-from tensorflow.keras.applications.resnet import ResNet50 
+# from tensorflow.keras.applications.resnet import ResNet50 
+from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
 import pandas as pd 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -20,12 +21,10 @@ warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
-SIZE=160
 BATCH_SIZE = 15
-SEED = 32
+SIZE=160
 
 def initialize():
-   
     
     with open("dataset_" + str(SIZE)+".pickle", "rb") as f:
         data = pickle.load(f)
@@ -33,9 +32,9 @@ def initialize():
     df = pd.DataFrame.from_dict(data)
 
     train_df, test_df = train_test_split(df, 
-                                         test_size=0.3, 
+                                         test_size=0.3,
                                          stratify=df['labels'],
-                                         random_state=SEED)
+                                         random_state=32)
 
     le = LabelEncoder()
 
@@ -45,8 +44,9 @@ def initialize():
     test_images = np.array(test_df['images'].to_list())#/ 255.0
     test_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
 
-    model = ResNet50 (include_top=True,
-                      weights=None,
+    model=MobileNetV2(include_top=False,
+                      weights='imagenet',
+                      alpha=0.35,
                       input_tensor=None,
                       input_shape=(SIZE,SIZE,3),
                       pooling='max',
@@ -80,7 +80,7 @@ print(tf.test.is_gpu_available())
 
 model,train_images, train_labels, test_images, test_labels = initialize()
 history = process(model, train_images, train_labels, test_images, test_labels)
-model.save('model_resnet50.h5')
+model.save('model_MobileNetV2.h5')
 
 plt.figure()
 plt.plot(history.history["accuracy"])
@@ -93,7 +93,6 @@ plt.show()
 
 with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
-    
     
 model.evaluate(test_images,
                test_labels,
