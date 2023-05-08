@@ -1,9 +1,8 @@
 import streamlit as st
-import pandas as pd
-from joblib import load
+# import pandas as pd
+# from joblib import load
 import urllib.request
 import numpy as np
-
 
 txt=""
 
@@ -81,7 +80,8 @@ def load_test_images(path, SIZE=160, SEED=31):
     # import cv2
     import pickle
     # from sklearn.model_selection import train_test_split
-    print(path)
+    print("\CNN_V2_4_0_1_91\predict_list.pickle")
+    path = "\CNN_V2_4_0_1_91\predict_list.pickle"
     
     with open("test_images" + str(SIZE)+".pickle", "rb") as f:
         test_images = pickle.load(f)

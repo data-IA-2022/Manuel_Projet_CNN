@@ -1,18 +1,26 @@
 import streamlit as st
-import pandas as pd
-from joblib import load
+# import pandas as pd
+# from joblib import load
 import index
 # from tensorflow.keras.models import load_model
 
 lst = ["Image 1", "Image 2", "Images de test mal classées", "Toutes les images de test"]
+
 
 img1 = index.load_image()
 img2 =index.load_image_2()
 images, labels, predict_list, predict_reject_list, lst_classes, history =index.load_test_images('\CNN V2.4 0.1 91%')
 img=None
 
+if 'texte_bouton_1' not in st.session_state:
+    st.session_state['texte_bouton_1'] = "Suivant"
 
+if 'texte_bouton_2' not in st.session_state:
+    st.session_state['texte_bouton_2'] = "Précédent"
 
+if 'expliaction_buton' not in st.session_state:
+    st.session_state['expliaction_buton'] = 0
+    
 if 'model' not in st.session_state:
     st.session_state['model'] = index.load_my_model()
     
