@@ -6,7 +6,12 @@ import pandas as pd
 
 st.title("Custom CNN !")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Training", "Graf Model", "Model Sumary", "Model Code","Predictions"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Training", 
+                                        "Graf Model", 
+                                        "Model Sumary", 
+                                        "Model Code",
+                                        "Predictions",
+                                        'Score validation'])
 
 with tab1:
     history_df = pd.DataFrame(index.history)
@@ -119,4 +124,13 @@ with tab5:
             st.session_state.predict_image=img_resized
             st.title("It's a "+index.lst_classes[pred]+" !")
             pass
-     
+
+with tab6:
+    st.caption("")
+    st.caption("")
+    st.image( cv2.imread('.\CNN_V2_4_0_1_91\Capture_valisation.png'))
+    st.caption("")
+    st.caption("")
+    st.text('''
+            Le score est probablement sur évalué, le memoire vidéo de la carte graphique
+            étant visiblement insuffisante.''')

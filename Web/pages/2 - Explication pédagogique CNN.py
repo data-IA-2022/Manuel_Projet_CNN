@@ -15,7 +15,7 @@ with tab1:
     col11, col12, col13 = st.columns([1,6,1])
    
     with col12:             
-        st.image(cv2.imread('Vision_Humain.jpg'), 
+        st.image(cv2.imread('.\Images\Vision_Humain.jpg'), 
               caption='Système visuel ganglionnaires')
     
     st.text('''
@@ -49,7 +49,7 @@ with tab1:
     col11, col12, col13 = st.columns([1,6,1])
    
     with col12:             
-        st.image(cv2.imread('Capture_triangle.png'), 
+        st.image(cv2.imread('.\Images\Capture_triangle.png'), 
                   caption='Caractéristiques de bord et de contours')
         
 
@@ -59,8 +59,8 @@ with tab2:
     col11, col12, col13 = st.columns([0.5,6,0.5])
    
     with col12:        
-        st.image(cv2.cvtColor(cv2.imread('conv.png'), cv2.COLOR_BGR2RGB))
-        st.image(cv2.cvtColor(cv2.imread('Typical_cnn.jpg'), cv2.COLOR_BGR2RGB),
+        st.image(cv2.cvtColor(cv2.imread('.\Images\conv.png'), cv2.COLOR_BGR2RGB))
+        st.image(cv2.cvtColor(cv2.imread('.\Images\Typical_cnn.jpg'), cv2.COLOR_BGR2RGB),
                  caption="L’architecture d'un cnn")
         
     st.text('''
@@ -102,7 +102,7 @@ with tab2:
     col11, col12, col13 = st.columns([1,6,1])
    
     with col12:        
-        st.image(cv2.cvtColor(cv2.imread('cnn_2.jpg'), cv2.COLOR_BGR2RGB), 
+        st.image(cv2.cvtColor(cv2.imread('.\Images\cnn_2.jpg'), cv2.COLOR_BGR2RGB), 
                  caption='Extraction de caractéristiques multi-layers')
                
 with tab3:
@@ -124,7 +124,7 @@ with tab3:
     col11, col12, col13 = st.columns([1,6,1])
     
     with col12:        
-        st.image(cv2.cvtColor(cv2.imread('Capture_lena.png'), cv2.COLOR_BGR2RGB),
+        st.image(cv2.cvtColor(cv2.imread('.\Images\Capture_lena.png'), cv2.COLOR_BGR2RGB),
                  caption='Extraction de caractéristiques')
     
     st.text('''
@@ -158,7 +158,7 @@ with tab4:
     col11, col12, col13 = st.columns([1,6,1])
 
     with col12:   
-        st.image(cv2.cvtColor(cv2.imread('Capture_pool.png'), cv2.COLOR_BGR2RGB),
+        st.image(cv2.cvtColor(cv2.imread('.\Images\Capture_pool.png'), cv2.COLOR_BGR2RGB),
                  caption="Réduction de dimentions")
     st.text('''
             Le pooling est souvent réalisé en utilisant une matrice de petite taille, 
@@ -176,7 +176,7 @@ with tab4:
     col11, col12, col13 = st.columns([1,6,1])
 
     with col12:   
-        st.image(cv2.cvtColor(cv2.imread('Pooling-process-of-input-feature-that-illustrates-the-drawbacks-of-max-pooling-and.png'), cv2.COLOR_BGR2RGB),
+        st.image(cv2.cvtColor(cv2.imread('.\Images\Pooling-process-of-input-feature-that-illustrates-the-drawbacks-of-max-pooling-and.png'), cv2.COLOR_BGR2RGB),
                  caption="Processus de pooling des caractéristiques d'entrée")
         
     st.text('''
@@ -218,7 +218,7 @@ with tab5:
     col11, col12, col13 = st.columns([0.1,6,0.1])
     
     with col12:   
-        st.image(cv2.cvtColor(cv2.imread('slide_10.jpg'), cv2.COLOR_BGR2RGB))
+        st.image(cv2.cvtColor(cv2.imread('.\Images\slide_10.jpg'), cv2.COLOR_BGR2RGB))
     
     st.text('''
             En somme, la fonction d'activation est un outil important qui permet de mieux 
@@ -233,7 +233,7 @@ with tab6:
     col11, col12, col13 = st.columns([0.1,6,0.1])
     
     with col12:   
-        st.image(cv2.cvtColor(cv2.imread('73_blog_image_1.png'), cv2.COLOR_BGR2RGB))
+        st.image(cv2.cvtColor(cv2.imread('.\Images\Capture_Flatten.png'), cv2.COLOR_BGR2RGB))
     
     st.text('''
             La couche Flatten est une couche utilisée dans les réseaux de neurones pour 
