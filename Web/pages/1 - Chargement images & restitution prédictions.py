@@ -18,13 +18,13 @@ with tab2:
     col11, col12, col13 = st.columns([1,6,1])
    
     with col12:         
-        st.image(st.session_state.model_graf)
+        st.image(st.session_state.model_graf_CNN_V2_4_0_1_91)
     
 with tab3:
     col11, col12, col13 = st.columns([1,6,1])
    
     with col12:         
-        st.session_state.model.summary(print_fn=lambda x: st.text(x))
+        st.session_state.model_CNN_V2_4_0_1_91.summary(print_fn=lambda x: st.text(x))
 
 with tab4:
     code = '''
@@ -115,7 +115,7 @@ with tab5:
             st.title("Prédiction : "+index.lst_classes[ index.predict_list[hum_range]])
         else:
             st.title("")
-            pred=index.prediction_2(img_resized, st.session_state.model)
+            pred=index.prediction_2(img_resized, st.session_state.model_CNN_V2_4_0_1_91)
             st.session_state.predict_image=img_resized
             st.title("It's a "+index.lst_classes[pred]+" !")
             pass
