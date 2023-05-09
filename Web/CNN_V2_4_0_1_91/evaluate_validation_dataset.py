@@ -49,7 +49,8 @@ with open('val_labels' + str(SIZE)+'.pickle', 'wb') as f:
 
 # Évaluation du modèle sur les données de validation
 score = model.evaluate(val_images,
-                       val_labels)
+                       val_labels,
+                       batch_size= 20)
 
 # Affichage du score
 print()

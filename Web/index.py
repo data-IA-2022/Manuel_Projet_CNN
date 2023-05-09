@@ -4,6 +4,7 @@ import urllib.request
 
 txt=""
 
+# Fonction pour charger l'image depuis une URL
 @st.cache(suppress_st_warning=True)
 def load_image():
     import cv2
@@ -18,6 +19,7 @@ def load_image():
         
     return img
 
+# Fonction pour charger une deuxième image depuis une URL
 @st.cache(suppress_st_warning=True)
 def load_image_2():
     import cv2
@@ -32,6 +34,7 @@ def load_image_2():
    
     return img
 
+# Fonction pour charger un modèle sauvegardé
 @st.cache(suppress_st_warning=True)
 def load_my_model_CNN_V2_4_0_1_91():
     from tensorflow.keras.models import load_model
@@ -40,6 +43,7 @@ def load_my_model_CNN_V2_4_0_1_91():
         
     return model
     
+# Fonction pour charger le modèle sauvegardé et le représenter sous forme de graph
 @st.cache(suppress_st_warning=True)
 def load_model_graf_CNN_V2_4_0_1_91(model):
     from tensorflow.keras.utils import plot_model
@@ -50,6 +54,7 @@ def load_model_graf_CNN_V2_4_0_1_91(model):
    
     return graf
 
+# Fonction pour effectuer une prédiction sur une image donnée avec un modèle donné
 @st.cache(suppress_st_warning=True)
 def prediction(num_image, images, model):
     import numpy as np
@@ -63,6 +68,7 @@ def prediction(num_image, images, model):
     # backend.clear_session()
     return 1
 
+# Fonction pour effectuer une prédiction sur une image donnée avec un modèle donné
 @st.cache(suppress_st_warning=True)
 def prediction_2(image, model):
     import numpy as np
@@ -71,7 +77,8 @@ def prediction_2(image, model):
     print(pred)
     print(predicted_class)
     return predicted_class
-    
+ 
+# Fonction pour charger les images de test sauvegardées et leurs labels  
 @st.cache(suppress_st_warning=True)
 def load_test_images(SIZE=160, SEED=31):
     import pickle
@@ -84,6 +91,7 @@ def load_test_images(SIZE=160, SEED=31):
  
     return test_images, test_labels#, predict_list, predict_reject_list, lst_classes, history
 
+# Fonction pour charger les resultats précalculés 
 @st.cache(suppress_st_warning=True)
 def load_CNN_V2_4_0_1_91(SIZE=160, SEED=31):
     

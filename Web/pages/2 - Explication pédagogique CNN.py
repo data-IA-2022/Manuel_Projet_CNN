@@ -1,6 +1,7 @@
 import streamlit as st
 import cv2
 
+# Création de 7 onglets
 tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Sens visuel humain", 
                                                     "Model artificiel", 
                                                     "La convolution",
@@ -9,6 +10,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Sens visuel humain",
                                                     "Flatten",
                                                     "Fully connected net"])
 
+# Onglet 1 : Sens visuel humain
 with tab1:
     st.title("Sens visuel humain.")
     
@@ -52,7 +54,7 @@ with tab1:
         st.image(cv2.imread('.\Images\Capture_triangle.png'), 
                   caption='Caractéristiques de bord et de contours')
         
-
+# Onglet 2 : Transposition informatique du système visuel humain
 with tab2:
     st.title("Transposition informatique du système visuel humain.")
     
@@ -104,7 +106,8 @@ with tab2:
     with col12:        
         st.image(cv2.cvtColor(cv2.imread('.\Images\cnn_2.jpg'), cv2.COLOR_BGR2RGB), 
                  caption='Extraction de caractéristiques multi-layers')
-               
+
+# Onglet 3 : Convolution         
 with tab3:
     st.title("Principe et buts de la convolution. ")
 
@@ -132,6 +135,7 @@ with tab3:
             dont le cerveau humain utilise des cellules ganglionnaires pour détecter les 
             caractéristiques visuelles de base dans les images.''')
   
+# Onglet 4 : Pooling  
 with tab4:
     st.title("Principe et buts du pooling.")
     st.caption("")
@@ -186,7 +190,8 @@ with tab4:
             convolutionnels pour aider à extraire des caractéristiques d'une image et 
             à les utiliser pour des tâches telles que la reconnaissance d'objets ou la 
             classification d'images.''')
-     
+
+# Onglet 5 : Fonction d'activation       
 with tab5:
     st.title("Principe et buts d'une fonction d'activation.")
     st.caption("")
@@ -224,7 +229,8 @@ with tab5:
             En somme, la fonction d'activation est un outil important qui permet de mieux 
             comprendre et de mieux utiliser les réseaux de neurones pour accomplir des tâches 
             utiles comme la reconnaissance d'image ou la prédiction de résultats.''')
-       
+  
+# Onglet 6 : Couche Flatten    
 with tab6:
     st.title("Principe et buts de la couche Flatten.")
     st.caption("")
@@ -256,6 +262,7 @@ with tab6:
             une forme plus simple et plus facile à manipuler pour accomplir des tâches comme 
             la reconnaissance d'image.''')
 
+# Onglet 7 : Couche Fully Connected
 with tab7:
     st.title("Principe et buts du Fully connected net.")
     st.caption("")

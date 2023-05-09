@@ -1,20 +1,21 @@
 import streamlit as st
-# import pandas as pd
-# from joblib import load
 import index
-# from tensorflow.keras.models import load_model
 
 lst = ["Image 1", "Image 2", "Images de test mal classées", "Toutes les images de test"]
 
-
+# Chargement des images 1 et 2 pour evaluation
 img1 = index.load_image()
 img2 =index.load_image_2()
 
+# Chargement des images de test et des étiquettes
 images, labels = index.load_test_images()
+
+# Chargement des modèles CNN, de la liste de prédiction, de la liste de prédiction rejetée et de l'historique de l'apprentissage
 predict_list, predict_reject_list, lst_classes, history = index.load_CNN_V2_4_0_1_91()
 
 img=None
 
+# Initialisation des variables d'état pour les boutons de navigation entre les images
 if 'texte_bouton_1' not in st.session_state:
     st.session_state['texte_bouton_1'] = "Suivant"
 
@@ -48,21 +49,16 @@ def prediction(img, images, model):
 def prediction_2(img, model):
     return index.prediction_2(img, model)
     
-# col11, col12, col13 = st.columns([1,6,1])
-   
-# with col12:        
-#     st.title("Classification d'images - Deep Learning & CNN")
-    
+# Affichage du titre
 st.markdown("<h1 style='text-align: center; color: grey;'>Classification d'images - Deep Learning & CNN</h1>", unsafe_allow_html=True)
 
-# st.caption("")
-# st.caption("")
 
+# Affichage de l'imag
 col11, col12, col13 = st.columns([1,6,1])
-   
 with col12:        
     st.markdown("![Alt Text](https://res.cloudinary.com/nuxeo/image/upload/f_auto,w_600,q_auto,c_scale/v1//blog/cat-or-dog-ai.gif)")
     
+# Affichage de la description du projet
 st.text('''
         Développer une application qui permet de détecter automatiquement des images 
         d'animaux Chiens et Chats.
@@ -72,20 +68,22 @@ st.text('''
         
         Le classifieur sera développé avec Keras.''')
     
-    
+
+# Affichage des onglets avec les différents éléments du projet    
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Critères de performance", 
                                                 "Contexte du projet",
                                                 "Modalités pédagogiques",
                                                 "Modalités d'évaluation",
                                                 "Livrables",
                                                 "Ressource(s)"])
-
+# Onglet "Ressources"
 with tab6:
     st.markdown("https://keras.io/examples/vision/image_classification_from_scratch/")
     st.markdown("https://poloclub.github.io/cnn-explainer/")
     st.markdown("https://keras.io/about/")
     st.markdown("https://stanford.edu/~shervine/l/fr/teaching/cs-230/pense-bete-reseaux-neurones-convolutionnels")
-    
+
+# Onglet "Contexte du projet"    
 with tab2:
     st.text('''
             En tant que développeur en IA,
@@ -95,7 +93,8 @@ with tab2:
                 - Développer l'IA
                 - Mettre en place l'application (web, IA)
                 - Livrer l'application au commanditaire''')
-    
+
+# Onglet "Modalités pédagogiques"    
 with tab3:    
     st.text('''    
             - Consulter en priorité les ressources données dans le projet. 
@@ -118,12 +117,14 @@ with tab3:
                 supplémentaires que vous jugerez utiles
                 - Tout autre point que vous jugerez utile''')
 
+# Onglet "Modalités d'évaluation"  
 with tab4:
     st.text('''   
             - Démo de l'application
             - Présentation synthétique des CNN : objectif, fonctionnement, forces, faiblesses, 
             cas d'usage, etc.''')
-    
+
+# Onglet "Livrables"      
 with tab5:
     st.text('''   
             - Des scripts Python fonctionnels et commentés, déposés sur Github
@@ -131,7 +132,8 @@ with tab5:
                 1. Page d'accueil
                 2. Page de chargement de l'image et de restitution des prédictions
                 3. Page d'explication pédagogique des réseaux de neurones CNN''')
-    
+
+# Onglet "Critères de performance"  
 with tab1:
     st.text(''' 
                 - Développement du CNN avec Keras

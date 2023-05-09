@@ -1,16 +1,21 @@
 import streamlit as st
 
+# Titre de la form
 st.title("Mode d'apprentissage des réseaux de neurones convolutifs (CNN).")
+
 st.caption("")
 st.caption("")
 
 col11, col12, col13 = st.columns([1,6,1])
-   
+ 
+# Affichage d'une image de réseau de neurone propagation retro-propagation  
 with col12:        
     st.markdown("![Alt Text](https://i.makeagif.com/media/7-23-2019/q3ItDm.gif)")
     
 st.caption("")
 st.caption("")
+
+# Description sur les CNN
 st.text('''
         Les réseaux de neurones convolutifs (CNN) sont des systèmes d'intelligence 
         artificielle qui pprennent à reconnaître des motifs et des formes dans des images.
@@ -27,9 +32,11 @@ st.text('''
 
 col11, col12, col13 = st.columns([0.1,6,0.1])
    
+# Affichage d'une autre image de réseau de neurone propagation retro-propagation 
 with col12:        
     st.markdown("![Alt Text](https://miro.medium.com/v2/resize:fit:640/1*mTTmfdMcFlPtyu8__vRHOQ.gif)")
-    
+ 
+# Description sur les CNN
 st.text('''
         Une fois que le réseau a été entraîné, il peut être utilisé pour classifier de 
         nouvelles images. Lorsqu'une nouvelle image est présentée au réseau, celui-ci
@@ -41,12 +48,14 @@ st.caption("")
 
 col11, col12, col13 = st.columns([1,6,1])
    
+# Affichage d'une image de réseau de neurone propagation
 with col12:        
     st.markdown("![Alt Text](https://miro.medium.com/v2/resize:fit:500/0*61ZaNNpbpMtZLLpZ.)")
 
 st.caption("")
 st.caption("")
 
+# Conclusion sur les CNN
 st.text('''
         En résumé, le processus d'apprentissage des CNN se fait en deux étapes : 
         l'entraînement sur un ensemble de données d'images pour apprendre à reconnaître 
