@@ -2,13 +2,14 @@ import streamlit as st
 # import pandas as pd
 # from joblib import load
 import urllib.request
-import numpy as np
+
 
 txt=""
 
 @st.cache(suppress_st_warning=True)
 def load_image():
     import cv2
+    import numpy as np
     url = "https://i.pinimg.com/originals/f7/71/47/f77147564a332c66f1759da52ac56ef5.jpg"
     
     img=[]
@@ -22,6 +23,7 @@ def load_image():
 @st.cache(suppress_st_warning=True)
 def load_image_2():
     import cv2
+    import numpy as np
     url = "https://www.annuaire-animaux.net/images/fonds-ecran/maxi/chien-rigolo.jpg"
     
     img=[]
@@ -52,6 +54,7 @@ def load_model_graf_CNN_V2_4_0_1_91(model):
 
 @st.cache(suppress_st_warning=True)
 def prediction(num_image, images, model):
+    import numpy as np
     print(images[num_image].shape)
     # model = load_model('model_.h5')
     model.summary()
@@ -64,6 +67,7 @@ def prediction(num_image, images, model):
 
 @st.cache(suppress_st_warning=True)
 def prediction_2(image, model):
+    import numpy as np
     pred = model.predict(np.array([image]))
     predicted_class = np.argmax(pred)
     print(pred)
