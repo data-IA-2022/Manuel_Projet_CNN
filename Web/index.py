@@ -4,36 +4,6 @@ import urllib.request
 
 txt=""
 
-# Fonction pour charger l'image depuis une URL
-@st.cache(suppress_st_warning=True)
-def load_image():
-    import cv2
-    import numpy as np
-    url = "https://i.pinimg.com/originals/f7/71/47/f77147564a332c66f1759da52ac56ef5.jpg"
-    
-    img=[]
-    with urllib.request.urlopen(url) as url_response:
-        img_array = np.asarray(bytearray(url_response.read()), dtype=np.uint8)
-        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        
-    return img
-
-# Fonction pour charger une deuxième image depuis une URL
-@st.cache(suppress_st_warning=True)
-def load_image_2():
-    import cv2
-    import numpy as np
-    url = "https://www.annuaire-animaux.net/images/fonds-ecran/maxi/chien-rigolo.jpg"
-    
-    img=[]
-    with urllib.request.urlopen(url) as url_response:
-        img_array = np.asarray(bytearray(url_response.read()), dtype=np.uint8)
-        img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-   
-    return img
-
 # Fonction pour charger un modèle sauvegardé
 @st.cache(suppress_st_warning=True)
 def load_my_model_CNN_V2_4_0_1_91():
@@ -56,27 +26,13 @@ def load_model_graf_CNN_V2_4_0_1_91(model):
 
 # Fonction pour effectuer une prédiction sur une image donnée avec un modèle donné
 @st.cache(suppress_st_warning=True)
-def prediction(num_image, images, model):
-    import numpy as np
-    print(images[num_image].shape)
-    # model = load_model('model_.h5')
-    model.summary()
-    pred = model.predict(np.array([images[num_image]]))
-    predicted_class = np.argmax(pred)
-    print(pred)
-    print(predicted_class)
-    # backend.clear_session()
-    return 1
-
-# Fonction pour effectuer une prédiction sur une image donnée avec un modèle donné
-@st.cache(suppress_st_warning=True)
 def prediction_2(image, model):
     import numpy as np
     pred = model.predict(np.array([image]))
     predicted_class = np.argmax(pred)
     print(pred)
     print(predicted_class)
-    return predicted_class
+    return pred
  
 # Fonction pour charger les images de test sauvegardées et leurs labels  
 @st.cache(suppress_st_warning=True)

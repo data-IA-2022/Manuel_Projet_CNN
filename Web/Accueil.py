@@ -1,11 +1,7 @@
 import streamlit as st
 import index
 
-lst = ["Image 1", "Image 2", "Images de test mal classées", "Toutes les images de test"]
-
-# Chargement des images 1 et 2 pour evaluation
-img1 = index.load_image()
-img2 =index.load_image_2()
+# lst = ["Image 1", "Image 2", "Toutes les images de test"]
 
 # Chargement des images de test et des étiquettes
 images, labels = index.load_test_images()
@@ -16,6 +12,12 @@ predict_list, predict_reject_list, lst_classes, history = index.load_CNN_V2_4_0_
 img=None
 
 # Initialisation des variables d'état pour les boutons de navigation entre les images
+if 'web_image_1' not in st.session_state:
+    st.session_state['web_image_1'] = "https://i.pinimg.com/originals/f7/71/47/f77147564a332c66f1759da52ac56ef5.jpg"
+    
+if 'web_image_2' not in st.session_state:
+    st.session_state['web_image_2'] = "https://www.annuaire-animaux.net/images/fonds-ecran/maxi/chien-rigolo.jpg"
+
 if 'texte_bouton_1' not in st.session_state:
     st.session_state['texte_bouton_1'] = "Suivant"
 
@@ -38,7 +40,7 @@ if 'index_bad_image' not in st.session_state:
     st.session_state['index_bad_image'] = 10
 
 if 'selector_type_image' not in st.session_state:
-    st.session_state['selector_type_image'] = 2
+    st.session_state['selector_type_image'] = 0
 
 if 'predict_image' not in st.session_state:    
     st.session_state['img']=img

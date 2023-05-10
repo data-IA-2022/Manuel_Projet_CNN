@@ -61,16 +61,19 @@ with tab4:
             '''
     st.code(code, language='python')
 
+
+
 # Onglet "Predictions"
 with tab5:
-        
+            
+    lst=["Image 1", "Image 2", "Toutes les images de test"]
     col11, col12 = st.columns([0.5,8])
     
     # Ajout d'un bouton radio pour sélectionner le type de prédiction
     with col12:     
         add_radio = st.radio(
             "Predictions :",
-            index.lst,
+            lst,
             index = st.session_state.selector_type_image,
             horizontal = True)
          
@@ -78,43 +81,37 @@ with tab5:
     st.caption("")
     
     # Récupération de l'image en fonction de la prédiction sélectionnée
-    if add_radio == index.lst[0]:   # index.load_image() # Si la prédiction sélectionnée est la première
+    if add_radio == lst[0]:   # index.load_image() # Si la prédiction sélectionnée est la première
         import urllib.request
         import numpy as np
-        url = st.text_input('Movie title', "https://www.annuaire-animaux.net/images/fonds-ecran/maxi/chien-rigolo.jpg")
-        with urllib.request.urlopen(url) as url_response:
+        st.session_state['web_image_1'] = st.text_input('Url image', st.session_state['web_image_1'])
+        with urllib.request.urlopen(st.session_state['web_image_1']) as url_response:
             img_array = np.asarray(bytearray(url_response.read()), dtype=np.uint8)
             img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         ld_image = img
         st.session_state.selector_type_image=0 # Définir le type d'image sélectionné
   
-    elif add_radio == index.lst[1]: # Sinon, si la prédiction sélectionnée est la deuxième
+    elif add_radio == lst[1]: # Sinon, si la prédiction sélectionnée est la deuxième
         import urllib.request
         import numpy as np
-        url = st.text_input('Movie title', "https://i.pinimg.com/originals/f7/71/47/f77147564a332c66f1759da52ac56ef5.jpg")
+        st.session_state['web_image_2'] = st.text_input('Url image', st.session_state['web_image_2'])
+        
         img=[]
-        with urllib.request.urlopen(url) as url_response:
+        with urllib.request.urlopen( st.session_state['web_image_2']) as url_response:
             img_array = np.asarray(bytearray(url_response.read()), dtype=np.uint8)
             img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         ld_image = img
         st.session_state.selector_type_image=1 # Définir le type d'image sélectionné
-    
-    elif add_radio == index.lst[2]:  # Sinon, si la prédiction sélectionnée est la troisième
-        hum_range = st.slider("Choisir une image :", 0, len(index.predict_reject_list)-1, 
-                              st.session_state.index_bad_image) # Afficher un curseur pour sélectionner une image rejetée   
-        ld_image=index.images[index.predict_reject_list[hum_range]] # Charger l'image sélectionnée
-        ld_image = cv2.cvtColor(ld_image, cv2.COLOR_BGR2RGB) # Convertir l'image en RGB
-        st.session_state.selector_type_image=2 # Définir le type d'image sélectionné
-        st.session_state.index_bad_image = hum_range # Enregistrer l'index de l'image rejetée sélectionnée
         
-    else:                           # Sinon, si la prédiction sélectionnée est la troisième
+    else:   
+        import numpy as np                        # Sinon, si la prédiction sélectionnée est la troisième
         hum_range = st.slider("Choisir une image :", 0, len(index.images)-1, 
                               st.session_state.index_image)  # Afficher un curseur pour sélectionner une image
         ld_image=index.images[hum_range] # Charger l'image sélectionnée
         ld_image = cv2.cvtColor(ld_image, cv2.COLOR_BGR2RGB) # Convertir l'image en RGB
-        st.session_state.selector_type_image=3 # Définir le type d'image sélectionné
+        st.session_state.selector_type_image=2 # Définir le type d'image sélectionné
         st.session_state.index_image = hum_range # Enregistrer l'index de l'image sélectionnée
       
     col1, col2 = st.columns(2)
@@ -124,11 +121,11 @@ with tab5:
     
     with col1:
         if st.session_state.selector_type_image==2:
-            st.title("Image : #"+str(index.predict_reject_list[hum_range]))
-            st.image(img_resized, caption='Image resizée 160x160')
-        elif st.session_state.selector_type_image==3:
             st.title("Image : #"+str(hum_range))
             st.image(img_resized, caption='Image resizée 160x160')
+        # elif st.session_state.selector_type_image==3:
+        #     st.title("Image : #"+str(hum_range))
+        #     st.image(img_resized, caption='Image resizée 160x160')
         else:
             # Ajout de deux onglets pour afficher l'image redimensionnée et l'originale
             tab31, tab32 = st.tabs(["160x160", "Original"])
@@ -139,28 +136,60 @@ with tab5:
  
     with col2:
         st.title("")
-        if st.session_state.selector_type_image==2:
-            # Affichage de l'étiquette et de la prédiction pour l'image rejetée
-            st.title("Label : "+index.lst_classes[index.labels[index.predict_reject_list[hum_range]]])
-            st.title("Prédiction : "+index.lst_classes[ index.predict_list[index.predict_reject_list[hum_range]]])
-        elif st.session_state.selector_type_image==3:
-            st.title("Label : "+index.lst_classes[index.labels[hum_range]])
-            st.title("Prédiction : "+index.lst_classes[ index.predict_list[hum_range]])
-        else:
-            st.title("")
-            # Affichage de l'étiquette et de la prédiction pour l'image sélectionnée
-            pred=index.prediction_2(img_resized, st.session_state.model_CNN_V2_4_0_1_91)
-            st.session_state.predict_image=img_resized
-            st.title("It's a "+index.lst_classes[pred]+" !")
-            pass
         
+        pred=index.prediction_2(img_resized, st.session_state.model_CNN_V2_4_0_1_91)
+        st.session_state.predict_image=img_resized
+        st.title("It's a "+index.lst_classes[np.argmax(pred)]+" !")
+        st.title(str(np.round(np.max(pred)*100,1))+" % ")#" - " + str(np.argmax(pred)*100) + " !")
+
 # Onglet "Score des images de validation"
 with tab6:
+    import pickle
+    import plotly.graph_objs as go
+            
+    st.title("Matrice de confusion.")
+    
+    # Chargement de la matrice de confusion à partir du fichier
+    with open('.\CNN_V2_4_0_1_91\confusion_matrix.pickle', 'rb') as f:
+        confusion_matrix = pickle.load(f)
+    
+    class_names = ["class1", "class2"]
+    df = pd.DataFrame(confusion_matrix, columns=index.lst_classes, index=index.lst_classes[::-1])
+    
+    # Création d'une trace Plotly pour la matrice de confusion
+    trace = go.Heatmap(z=df.values[::-1],
+                       x=df.columns,
+                       y=df.index,
+                       colorscale='amp')
+    
+    # Création d'une figure Plotly et ajout de la trace
+    fig = go.Figure(data=[trace])
+    
+    # Affichage de la figure
+    st.plotly_chart(fig, use_container_width=True)
+    
+    st.title("Performance.")
+    
+    with open('.\CNN_V2_4_0_1_91\performance.pickle', 'rb') as f:
+        performance=pickle.load(f)
+       
+    col11, col12, col13 = st.columns([1,6,1])
+    with col12:
+        st.subheader("Precision : " + str(round(performance[0]*100, 3)))
+        st.subheader("Recall : " + str(round(performance[1]*100, 3)))
+        st.subheader("f_score : " + str(round(performance[2]*100, 3)))
+    
+    st.title("-----")
     st.caption("")
     st.caption("")
     st.image( cv2.imread('.\CNN_V2_4_0_1_91\Capture_valisation.png'))
     st.caption("")
     st.caption("")
-    st.text('''
-            Le score est probablement sur évalué, le memoire vidéo de la carte graphique
-            étant visiblement insuffisante.''')
+        
+    
+        
+    
+    
+    
+    # # Calcul du rapport de classification
+    # report = classification_report(index.labels, index.predict_list)
