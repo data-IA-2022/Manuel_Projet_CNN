@@ -79,11 +79,26 @@ with tab5:
     
     # Récupération de l'image en fonction de la prédiction sélectionnée
     if add_radio == index.lst[0]:   # index.load_image() # Si la prédiction sélectionnée est la première
-        ld_image = index.img1       # Charger la première image
+        import urllib.request
+        import numpy as np
+        url = st.text_input('Movie title', "https://www.annuaire-animaux.net/images/fonds-ecran/maxi/chien-rigolo.jpg")
+        with urllib.request.urlopen(url) as url_response:
+            img_array = np.asarray(bytearray(url_response.read()), dtype=np.uint8)
+            img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        ld_image = img
         st.session_state.selector_type_image=0 # Définir le type d'image sélectionné
   
     elif add_radio == index.lst[1]: # Sinon, si la prédiction sélectionnée est la deuxième
-        ld_image = index.img2       # Charger la deuxième image
+        import urllib.request
+        import numpy as np
+        url = st.text_input('Movie title', "https://i.pinimg.com/originals/f7/71/47/f77147564a332c66f1759da52ac56ef5.jpg")
+        img=[]
+        with urllib.request.urlopen(url) as url_response:
+            img_array = np.asarray(bytearray(url_response.read()), dtype=np.uint8)
+            img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        ld_image = img
         st.session_state.selector_type_image=1 # Définir le type d'image sélectionné
     
     elif add_radio == index.lst[2]:  # Sinon, si la prédiction sélectionnée est la troisième
