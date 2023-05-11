@@ -5,7 +5,7 @@ import cv2
 import pandas as pd
 
 #Titre de la form
-st.title("Custom CNN !")
+st.markdown("<h1 style='text-align: center; color: grey;'>Custom CNN !</h1>", unsafe_allow_html=True)
 
 # Crée les onglets
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Training", 
@@ -123,9 +123,7 @@ with tab5:
         if st.session_state.selector_type_image==2:
             st.title("Image : #"+str(hum_range))
             st.image(img_resized, caption='Image resizée 160x160')
-        # elif st.session_state.selector_type_image==3:
-        #     st.title("Image : #"+str(hum_range))
-        #     st.image(img_resized, caption='Image resizée 160x160')
+     
         else:
             # Ajout de deux onglets pour afficher l'image redimensionnée et l'originale
             tab31, tab32 = st.tabs(["160x160", "Original"])
@@ -146,7 +144,15 @@ with tab5:
 with tab6:
     import pickle
     import plotly.graph_objs as go
-            
+          
+    st.caption("")
+    st.caption("")
+    
+    st.text('''
+            Le modèle semble être performant avec une précision, un rappel et un f-score élevés
+            d'environ 91%. Cela signifie que le modèle est capable de prédire correctement les
+            classes d'images dans une grande proportion des cas. ''')
+    
     st.title("Matrice de confusion.")
     
     # Chargement de la matrice de confusion à partir du fichier
@@ -175,9 +181,10 @@ with tab6:
        
     col11, col12, col13 = st.columns([1,6,1])
     with col12:
-        st.subheader("Precision : " + str(round(performance[0]*100, 3)))
-        st.subheader("Recall : " + str(round(performance[1]*100, 3)))
-        st.subheader("f_score : " + str(round(performance[2]*100, 3)))
+        st.subheader("Precision : " + str(round(performance[0]*100, 3)) + " %")
+        st.subheader("Recall : " + str(round(performance[1]*100, 3)) + " %")
+        st.subheader("f_score : " + str(round(performance[2]*100, 3)) + " %")
+        
     
     st.title("-----")
     st.caption("")
