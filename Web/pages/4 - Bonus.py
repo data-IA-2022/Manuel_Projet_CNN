@@ -33,14 +33,12 @@ def plot_matrice_confus(path):
                        x=df.columns,
                        y=df.index,
                        colorscale='amp')
+    
     # Création d'une figure Plotly et ajout de la trace
     fig = go.Figure(data=[trace])
     
     return fig 
     
-    
-    
-
 # Affichage du titre
 st.markdown("<h1 style='text-align: center; color: grey;'>Bonus</h1>", unsafe_allow_html=True)
 
@@ -73,6 +71,10 @@ with tab1:
                     input_shape=(SIZE,SIZE,3),
                     pooling='max',
                     classes=np.max(train_labels+1))
+        
+        Total params: 23,587,712
+        Trainable params: 23,534,592
+        Non-trainable params: 53,120
                '''
        st.code(code, language='python')
        
@@ -118,6 +120,10 @@ with tab1:
                     input_shape=(SIZE,SIZE,3),
                     pooling='max',
                     classes=np.max(train_labels+1))
+        
+        Total params: 23,591,810
+        Trainable params: 23,538,690
+        Non-trainable params: 53,120
                '''
        st.code(code, language='python')
        
@@ -168,6 +174,11 @@ with tab1:
         model.add(Dense(64, activation="relu"))
         model.add(Dense(2, activation = 'softmax'))
         model.layers[0].trainable = False
+       
+        
+       Total params: 23,723,138
+       Trainable params: 135,426
+       Non-trainable params: 23,587,712
                '''
        st.code(code, language='python')
        
@@ -182,7 +193,7 @@ with tab1:
                 
             st.header("Métriques.")
             
-            with open('.\Resnet50\CNN Resnet50 fine\CNN Trans Learn 244x244 batch_5', 'rb') as f:
+            with open('.\Resnet50\CNN Trans Learn 244x244 batch_5\performance.pickle', 'rb') as f:
                 performance=pickle.load(f)
                
             st.subheader("")
@@ -202,17 +213,143 @@ with tab2:
         # Création de 2 onglets
         tab11, tab12, tab13 = st.tabs(["Alpha = 1", 
                               "Alpha = 0.35",
-                              "Alpha = 1 (64x64)"])
+                              "Alpha = 5 (64x64)"])
         
         with tab11: 
             st.plotly_chart(plot_train_graph(".\MobileNetV2\Training\MobileNetV2\\"), use_container_width=True)
             
+            st.title("Model.")
+            code = '''
+            model=MobileNetV2(include_top=True,
+                                weights=None,
+                                input_tensor=None,
+                                input_shape=(SIZE,SIZE,3),
+                                pooling='max',
+                                classes=np.max(train_labels+1))
+             
+              
+            Total params: 2,260,546
+            Trainable params: 2,226,434
+            Non-trainable params: 34,112
+                    '''
+            st.code(code, language='python')
+            
+            col11, col12 = st.columns(2)
+            
+            with col11:     
+            
+                st.header("Matrice de confusion.")
+                st.plotly_chart(plot_matrice_confus(".\MobileNetV2\Training\MobileNetV2\\"), use_container_width=True)
+                
+            with col12:     
+                     
+                  st.header("Métriques.")
+                 
+                  with open('.\MobileNetV2\Training\MobileNetV2\performance.pickle', 'rb') as f:
+                      performance=pickle.load(f)
+                    
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                 
+                  st.subheader("Precision : " + str(round(performance[0]*100, 3)) +" %")
+                  st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
+                  st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")
+            
         with tab12:
             st.plotly_chart(plot_train_graph(".\MobileNetV2\Training\MobileNetV2 0.35\\"), use_container_width=True)
         
+            st.title("Model.")
+            code = '''
+            model=MobileNetV2(include_top=True,
+                              weights=None,
+                              input_tensor=None,
+                              alpha=0.35,
+                              input_shape=(SIZE,SIZE,3),
+                              pooling='max',
+                              classes=np.max(train_labels+1))
+             
+              
+            Total params: 412,770
+            Trainable params: 398,690
+            Non-trainable params: 14,080
+                    '''
+            st.code(code, language='python')
+            
+            col11, col12 = st.columns(2)
+            
+            with col11:     
+            
+                st.header("Matrice de confusion.")
+                st.plotly_chart(plot_matrice_confus(".\MobileNetV2\Training\MobileNetV2 0.35\\"), use_container_width=True)
+                
+            with col12:     
+                     
+                  st.header("Métriques.")
+                 
+                  with open('.\MobileNetV2\Training\MobileNetV2 0.35\performance.pickle', 'rb') as f:
+                      performance=pickle.load(f)
+                    
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                 
+                  st.subheader("Precision : " + str(round(performance[0]*100, 3)) +" %")
+                  st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
+                  st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")
         with tab13:
             st.plotly_chart(plot_train_graph(".\MobileNetV2\Training\MobileNetV2 64x64 - 5\\"), use_container_width=True)
                
+        
+            st.title("Model.")
+            code = '''
+            model=MobileNetV2(include_top=True,
+                              weights=None,
+                              input_tensor=None,
+                              alpha=5,
+                              input_shape=(SIZE,SIZE,3),
+                              pooling='max',
+                              classes=np.max(train_labels+1))
+             
+              
+            Total params: 53,796,162
+            Trainable params: 53,625,602
+            Non-trainable params: 170,560
+                    '''
+            st.code(code, language='python')
+            
+            col11, col12 = st.columns(2)
+            
+            with col11:     
+            
+                st.header("Matrice de confusion.")
+                st.plotly_chart(plot_matrice_confus(".\MobileNetV2\Training\MobileNetV2 64x64 - 5\\"), use_container_width=True)
+                
+            with col12:     
+                     
+                  st.header("Métriques.")
+                 
+                  with open('.\MobileNetV2\Training\MobileNetV2 64x64 - 5\performance.pickle', 'rb') as f:
+                      performance=pickle.load(f)
+                    
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                 
+                  st.subheader("Precision : " + str(round(performance[0]*100, 3)) +" %")
+                  st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
+                  st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")
+            
+            
     elif add_radio == lst[1]: 
         # Création de 2 onglets
         tab11, tab12 = st.tabs(["Alpha = 1", 
@@ -248,66 +385,3 @@ with tab2:
             
             st.plotly_chart(plot_train_graph(".\MobileNetV2\Transfere learning\MobileNetV2 224x224 - 0.35\\"), use_container_width=True)
             
-# # Titre de la form
-# st.title("Mode d'apprentissage des réseaux de neurones convolutifs (CNN).")
-
-# st.caption("")
-# st.caption("")
-
-# col11, col12, col13 = st.columns([1,6,1])
- 
-# # Affichage d'une image de réseau de neurone propagation retro-propagation  
-# with col12:        
-#     st.markdown("![Alt Text](https://i.makeagif.com/media/7-23-2019/q3ItDm.gif)")
-    
-# st.caption("")
-# st.caption("")
-
-# # Description sur les CNN
-# st.text('''
-#         Les réseaux de neurones convolutifs (CNN) sont des systèmes d'intelligence 
-#         artificielle qui pprennent à reconnaître des motifs et des formes dans des images.
-        
-#         Le processus d'apprentissage des CNN se fait en deux étapes. Tout d'abord, le 
-#         réseau est entraîné sur un ensemble de données d'images pour apprendre à 
-#         reconnaître les motifs et les caractéristiques des différentes classes d'images
-#         (par exemple, chats, chiens, oiseaux).
-
-#         Pendant cette première étape, le réseau va ajuster les poids de chaque neurone
-#         de chaque couche pour minimiser l'erreur de classification entre la sortie prédite
-#         par le réseau et la classe réelle de l'image. Cette étape peut prendre beaucoup de
-#         temps et nécessite souvent de grandes quantités de données.''')
-
-# col11, col12, col13 = st.columns([0.1,6,0.1])
-   
-# # Affichage d'une autre image de réseau de neurone propagation retro-propagation 
-# with col12:        
-#     st.markdown("![Alt Text](https://miro.medium.com/v2/resize:fit:640/1*mTTmfdMcFlPtyu8__vRHOQ.gif)")
- 
-# # Description sur les CNN
-# st.text('''
-#         Une fois que le réseau a été entraîné, il peut être utilisé pour classifier de 
-#         nouvelles images. Lorsqu'une nouvelle image est présentée au réseau, celui-ci
-#         utilise les caractéristiques qu'il a apprises lors de l'étape d'entraînement pour 
-#         prédire la classe de l'image.''')
-
-# st.caption("")
-# st.caption("")
-
-# col11, col12, col13 = st.columns([1,6,1])
-   
-# # Affichage d'une image de réseau de neurone propagation
-# with col12:        
-#     st.markdown("![Alt Text](https://miro.medium.com/v2/resize:fit:500/0*61ZaNNpbpMtZLLpZ.)")
-
-# st.caption("")
-# st.caption("")
-
-# # Conclusion sur les CNN
-# st.text('''
-#         En résumé, le processus d'apprentissage des CNN se fait en deux étapes : 
-#         l'entraînement sur un ensemble de données d'images pour apprendre à reconnaître 
-#         les motifs et les caractéristiques des différentes classes d'images, et 
-#         l'utilisation du réseau entraîné pour classifier de nouvelles images en utilisant 
-#         les caractéristiques qu'il a apprises. Ce processus permet aux CNN de reconnaître 
-#         des objets dans des images avec une grande précision.''')

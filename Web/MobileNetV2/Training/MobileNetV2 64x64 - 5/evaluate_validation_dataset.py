@@ -34,8 +34,10 @@ train_df, test_df = train_test_split(df,
 # Import du modèle sauvegardé
 from tensorflow.keras.models import load_model
 
-model = load_model('model_resnet50.h5')
+model = load_model('model_MobileNetV2.h5')
  
+model.summary()
+
 # Encodage des étiquettes avec LabelEncoder    
 le = LabelEncoder()
   

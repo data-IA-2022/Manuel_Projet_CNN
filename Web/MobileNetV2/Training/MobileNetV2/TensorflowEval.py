@@ -22,7 +22,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 BATCH_SIZE = 15
 SIZE=160
-SEED = 32
+SEED = 30
 
 def initialize():
     
