@@ -16,12 +16,19 @@ from tensorflow.keras.losses import SparseCategoricalCrossentropy
 from tensorflow.keras.backend import clear_session
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+import pathlib
 
 SIZE=160
 BATCH_SIZE = 15
-SEED = 32
+SEED = 30
 
-with open("dataset_" + str(SIZE)+".pickle", "rb") as f:
+
+path=pathlib.Path(__file__).parent.absolute()
+path = str(path.parent.parent.parent) + "\dataset_" + str(SIZE) + ".pickle"
+
+print(path)
+
+with open(path, "rb") as f:
     data = pickle.load(f)
 
 df = pd.DataFrame.from_dict(data)

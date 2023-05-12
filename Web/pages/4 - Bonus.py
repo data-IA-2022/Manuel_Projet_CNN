@@ -331,6 +331,7 @@ with tab2:
                 st.header("Matrice de confusion.")
                 st.plotly_chart(plot_matrice_confus(".\MobileNetV2\Training\MobileNetV2 64x64 - 5\\"), use_container_width=True)
                 
+                
             with col12:     
                      
                   st.header("Métriques.")
@@ -359,10 +360,92 @@ with tab2:
             
             st.plotly_chart(plot_train_graph(".\MobileNetV2\Fine tunning\MobileNetV2 Imagenet\\"), use_container_width=True)
             
+            st.title("Model.")
+            code = '''
+            model=MobileNetV2(include_top=False,
+                              weights='imagenet',
+                              input_tensor=None,
+                              input_shape=(SIZE,SIZE,3),
+                              pooling='max',
+                              classes=np.max(train_labels+1))
+        
+            Total params: 2,257,984
+            Trainable params: 2,223,872
+            Non-trainable params: 34,112
+                    '''
+            st.code(code, language='python')
+            
+            col11, col12 = st.columns(2)
+            
+            with col11:     
+            
+                st.header("Matrice de confusion.")
+                st.plotly_chart(plot_matrice_confus(".\MobileNetV2\Fine tunning\MobileNetV2 Imagenet\\"), use_container_width=True)
+                
+            with col12:     
+                     
+                  st.header("Métriques.")
+                 
+                  with open('.\MobileNetV2\Fine tunning\MobileNetV2 Imagenet\performance.pickle', 'rb') as f:
+                      performance=pickle.load(f)
+                    
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                 
+                  st.subheader("Precision : " + str(round(performance[0]*100, 3)) +" %")
+                  st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
+                  st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")
+            
         with tab12:
             
             st.plotly_chart(plot_train_graph(".\MobileNetV2\Fine tunning\MobileNetV2 Imagenet 0.35\\"), use_container_width=True)
             
+            st.title("Model.")
+            code = '''
+            model=MobileNetV2(include_top=False,
+                              weights='imagenet',
+                              alpha=0.35,
+                              input_tensor=None,
+                              input_shape=(SIZE,SIZE,3),
+                              pooling='max',
+                              classes=np.max(train_labels+1))
+        
+            Total params: 410,208
+            Trainable params: 396,128
+            Non-trainable params: 14,080
+                    '''
+            st.code(code, language='python')
+            
+            col11, col12 = st.columns(2)
+            
+            with col11:     
+            
+                st.header("Matrice de confusion.")
+                st.plotly_chart(plot_matrice_confus(".\MobileNetV2\Fine tunning\MobileNetV2 Imagenet 0.35\\"), use_container_width=True)
+                
+            with col12:     
+                     
+                  st.header("Métriques.")
+                 
+                  with open('.\MobileNetV2\Fine tunning\MobileNetV2 Imagenet 0.35\performance.pickle', 'rb') as f:
+                      performance=pickle.load(f)
+                    
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                 
+                  st.subheader("Precision : " + str(round(performance[0]*100, 3)) +" %")
+                  st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
+                  st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")         
+                    
+                    
     else:   
         # Création de 4 onglets
         tab11, tab12, tab13, tab14 = st.tabs(["Alpha = 1 (160x160)", 
@@ -372,6 +455,54 @@ with tab2:
         with tab11:
             
             st.plotly_chart(plot_train_graph(".\MobileNetV2\Transfere learning\MobileNetV2 160x160\\"), use_container_width=True)
+            
+            st.title("Model.")
+            code = '''
+            model = Sequential()
+
+            model.add(MobileNetV2 (include_top=False,
+                              weights="imagenet",
+                              alpha=1.0,
+                              pooling='max'))
+
+            # model.add(Flatten())
+
+            model.add(Dense(64, activation="relu"))
+            model.add(Dense(64, activation="relu"))
+            model.add(Dense(2, activation = 'softmax'))
+            model.layers[0].trainable = False
+        
+        
+            Total params: 2,344,258
+            Trainable params: 86,274
+            Non-trainable params: 2,257,984
+                    '''
+            st.code(code, language='python')
+            
+            col11, col12 = st.columns(2)
+            
+            with col11:     
+            
+                st.header("Matrice de confusion.")
+                st.plotly_chart(plot_matrice_confus(".\MobileNetV2\Transfere learning\MobileNetV2 160x160\\"), use_container_width=True)
+                
+            with col12:     
+                     
+                  st.header("Métriques.")
+                 
+                  with open('.\MobileNetV2\Transfere learning\MobileNetV2 160x160\performance.pickle', 'rb') as f:
+                      performance=pickle.load(f)
+                    
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                  st.subheader("")
+                 
+                  st.subheader("Precision : " + str(round(performance[0]*100, 3)) +" %")
+                  st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
+                  st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")         
             
         with tab12:
             

@@ -34,7 +34,7 @@ def initialize():
     train_df, test_df = train_test_split(df, 
                                          test_size=0.3,
                                          stratify=df['labels'],
-                                         random_state=32)
+                                         random_state=30)
 
     le = LabelEncoder()
 
