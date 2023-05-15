@@ -18,3 +18,7 @@ Web/MobileNetV2/Training/MobileNetV2 64x64 - 5/dataset_64.pickle
 Web/MobileNetV2/Transfere learning/MobileNetV2 224x224 - 0.35/dataset_224.pickle
 Dataset/PetImages
 Dataset/kagglecatsanddogs_5340 (1).zip
+Web/CNN_V2_4_0_1_91/roc_fpr.pickle
+Web/CNN_V2_4_0_1_91/roc_tpr.pickle
+Web/CNN_V2_4_0_1_91/val_images160.pickle
+Web/CNN_V2_4_0_1_91/val_labels160.pickle
