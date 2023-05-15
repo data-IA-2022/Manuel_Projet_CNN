@@ -16,4 +16,5 @@ Web/MobileNetV2/Training/MobileNetV2/dataset_160.pickle
 Web/MobileNetV2/Training/MobileNetV2 0.35/dataset_160.pickle
 Web/MobileNetV2/Training/MobileNetV2 64x64 - 5/dataset_64.pickle
 Web/MobileNetV2/Transfere learning/MobileNetV2 224x224 - 0.35/dataset_224.pickle
-Dataset
+Dataset/PetImages
+Dataset/kagglecatsanddogs_5340 (1).zip
