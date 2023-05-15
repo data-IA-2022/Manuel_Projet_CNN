@@ -57,7 +57,12 @@ with open('val_labels' + str(SIZE)+'.pickle', 'wb') as f:
     pickle.dump(val_labels, f)
 
 # Évaluation du modèle sur les données de validation
-pred_labels = model.predict_classes(val_images)
+try:
+    pred_labels = model.predict_classes(val_images)
+except:
+    pred_pred = model.predict(val_images)
+    pred_labels = pred_pred.argmax(axis=-1)
+    
 confusion_mtx = confusion_matrix(val_labels, pred_labels)
 
 # Sauvegarde de la matrice de confusion avec pickle

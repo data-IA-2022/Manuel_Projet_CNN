@@ -71,7 +71,7 @@ model.compile(optimizer="adamax",#adamax,
 
 history = model.fit(train_images,
                     train_labels,
-                    validation_split = 0.1,
+                    validation_split = 0.2,
                     epochs = 25,
                     batch_size= BATCH_SIZE)
 
