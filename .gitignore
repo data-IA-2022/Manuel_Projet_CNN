@@ -22,3 +22,6 @@ Web/CNN_V2_4_0_1_91/roc_fpr.pickle
 Web/CNN_V2_4_0_1_91/roc_tpr.pickle
 Web/CNN_V2_4_0_1_91/val_images160.pickle
 Web/CNN_V2_4_0_1_91/val_labels160.pickle
+Web/__pycache__
+Web/test_images160.pickle
+Web/test_labels160.pickle

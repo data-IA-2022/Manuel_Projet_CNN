@@ -3,6 +3,7 @@ import plotly.express as px
 import Accueil as index
 import cv2
 import pandas as pd
+from sklearn.metrics import auc
 
 #Titre de la form
 st.markdown("<h1 style='text-align: center; color: grey;'>Custom CNN !</h1>", unsafe_allow_html=True)
@@ -152,9 +153,7 @@ with tab6:
             Le modèle semble être performant avec une précision, un rappel et un f-score élevés
             d'environ 91%. Cela signifie que le modèle est capable de prédire correctement les
             classes d'images dans une grande proportion des cas. ''')
-    
-    st.title("Matrice de confusion.")
-    
+     
     # Chargement de la matrice de confusion à partir du fichier
     with open('.\CNN_V2_4_0_1_91\confusion_matrix.pickle', 'rb') as f:
         confusion_matrix = pickle.load(f)
@@ -162,29 +161,62 @@ with tab6:
     class_names = ["class1", "class2"]
     df = pd.DataFrame(confusion_matrix, columns=index.lst_classes, index=index.lst_classes[::-1])
     
-    # Création d'une trace Plotly pour la matrice de confusion
-    trace = go.Heatmap(z=df.values[::-1],
-                       x=df.columns,
-                       y=df.index,
-                       colorscale='amp')
+    col11, col12 = st.columns(2)
     
-    # Création d'une figure Plotly et ajout de la trace
-    fig = go.Figure(data=[trace])
-    
-    # Affichage de la figure
-    st.plotly_chart(fig, use_container_width=True)
-    
-    st.title("Performance.")
-    
-    with open('.\CNN_V2_4_0_1_91\performance.pickle', 'rb') as f:
-        performance=pickle.load(f)
-       
-    col11, col12, col13 = st.columns([1,6,1])
-    with col12:
+    with col11:     
+        
+        st.header("Matrice de confusion.")
+        
+        # Création d'une trace Plotly pour la matrice de confusion
+        trace = go.Heatmap(z=df.values[::-1],
+                           x=df.columns,
+                           y=df.index,
+                           colorscale='amp')
+        
+        # Création d'une figure Plotly et ajout de la trace
+        fig = go.Figure(data=[trace])
+        
+        # Affichage de la figure
+        st.plotly_chart(fig, use_container_width=True)
+        
+    with col12:   
+            
+        st.header("Performance.")
+        
+        with open('.\CNN_V2_4_0_1_91\performance.pickle', 'rb') as f:
+            performance=pickle.load(f)
+        
+        st.subheader("")
+        st.subheader("")
+        st.subheader("")
+        st.subheader("")
+        st.subheader("")
+        st.subheader("")
         st.subheader("Precision : " + str(round(performance[0]*100, 3)) + " %")
         st.subheader("Recall : " + str(round(performance[1]*100, 3)) + " %")
         st.subheader("f_score : " + str(round(performance[2]*100, 3)) + " %")
+    
         
+    with open('./CNN_V2_4_0_1_91/roc_fpr.pickle', 'rb') as f:
+        fpr = pickle.load(f)
+        
+    with open('./CNN_V2_4_0_1_91/roc_tpr.pickle', 'rb') as f:
+        tpr = pickle.load(f)
+    
+    st.header("Courbe ROC.")
+    
+    auc_score = auc(fpr, tpr)
+    
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=fpr, y=tpr, name='Courbe ROC'))
+    fig.update_layout(
+                        title='AUC-ROC ' + str(round(auc_score, 3)) ,
+                        xaxis=dict(title='Taux de faux positifs'),
+                        yaxis=dict(title='Taux de vrais positifs')
+                        )
+                        
+    # Affichage de la figure
+    st.plotly_chart(fig, use_container_width=True)
     
     st.title("-----")
     st.caption("")
@@ -192,11 +224,6 @@ with tab6:
     st.image( cv2.imread('.\CNN_V2_4_0_1_91\Capture_valisation.png'))
     st.caption("")
     st.caption("")
-        
-    
-        
-    
-    
     
     # # Calcul du rapport de classification
     # report = classification_report(index.labels, index.predict_list)
