@@ -90,18 +90,6 @@ model,train_images, train_labels, test_images, test_labels = initialize()
 history = process(model, train_images, train_labels, test_images, test_labels)
 model.save('model_resnet50.h5')
 
-
-
-
-plt.figure()
-plt.plot(history.history["accuracy"])
-plt.plot(history.history["val_accuracy"])
-plt.ylim(0.5, 1)
-plt.yticks(np.arange(0.5, 1.1, 0.1))
-plt.legend(["training_"+ str(np.max(train_labels+1)), "test"])
-plt.savefig('Figure.jpeg',format='jpeg')
-plt.show()
-
 with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
     
