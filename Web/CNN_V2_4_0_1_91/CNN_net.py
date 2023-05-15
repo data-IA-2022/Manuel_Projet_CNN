@@ -75,51 +75,18 @@ history = model.fit(train_images,
                     epochs = 25,
                     batch_size= BATCH_SIZE)
 
-history.history.keys()
-
-plt.figure()
-plt.plot(history.history["accuracy"])
-plt.plot(history.history["val_accuracy"])
-plt.ylim(0.5, 1)
-plt.yticks(np.arange(0.5, 1.1, 0.1))
-plt.legend(["training_"+ str(np.max(train_labels+1)), "test"])
-plt.savefig('Figure.jpeg',format='jpeg')
-plt.show()
+model.save('model_.h5')
 
 
 with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
     
+#vidage de la mémoire video du GPU
+backend.clear_session()
+    
 model.evaluate(test_images,
                test_labels,
                batch_size= BATCH_SIZE)
-
-
-model.save('model_.h5')
-
-predict_list=[]
-predict_reject_list=[]
-
-for i in range(0, len(test_images)):
-    pred = model.predict(np.array([test_images[i]]))
-    predicted_class = np.argmax(pred)
-    if i%500==0:
-        print (i)
-    predict_list.append(predicted_class)
-    if predicted_class != test_labels[i]:
-        predict_reject_list.append(i)
-
-with open('predict_list.pickle', 'wb') as f:
-    pickle.dump(predict_list, f)
-    
-with open('predict_reject_list.pickle', 'wb') as f:
-    pickle.dump(predict_reject_list, f)
-    
-with open('test_images' + str(SIZE)+'.pickle', 'wb') as f:
-    pickle.dump(test_images, f)
-
-with open('test_labels' + str(SIZE)+'.pickle', 'wb') as f:
-    pickle.dump(test_labels, f)
     
 
 #vidage de la mémoire video du GPU
