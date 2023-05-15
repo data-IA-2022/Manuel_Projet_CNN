@@ -26,7 +26,15 @@ SIZE=160
 
 def initialize():
     
-    with open("dataset_" + str(SIZE)+".pickle", "rb") as f:
+    import pathlib
+
+    path=pathlib.Path(__file__).parent.absolute()
+    path = str(path.parent.parent.parent) + "\dataset_" + str(SIZE) + ".pickle"
+
+    print(path)
+
+    # Ouverture des données avec pickl
+    with open(path, "rb") as f:
         data = pickle.load(f)
 
     df = pd.DataFrame.from_dict(data)

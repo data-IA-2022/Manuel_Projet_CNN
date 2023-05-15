@@ -18,8 +18,15 @@ from sklearn.metrics import confusion_matrix, precision_recall_fscore_support
 SIZE=160
 SEED=30
 
+import pathlib
+
+path=pathlib.Path(__file__).parent.absolute()
+path = str(path.parent.parent) + "\dataset_" + str(SIZE) + ".pickle"
+
+print(path)
+
 # Ouverture des données avec pickl
-with open("dataset_" + str(SIZE)+".pickle", "rb") as f:
+with open(path, "rb") as f:
     data = pickle.load(f)
 
 # Conversion des données en DataFrame

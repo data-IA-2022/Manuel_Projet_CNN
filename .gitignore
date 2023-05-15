@@ -1,0 +1,18 @@
+﻿*.h5
+Web/CNN_V2_4_0_1_91/_test_images160.pickle
+Web/CNN_V2_4_0_1_91/_test_labels160.pickle
+Web/CNN_V2_4_0_1_91/_val_images160.pickle
+Web/CNN_V2_4_0_1_91/_val_labels160.pickle
+Web/CNN_V2_4_0_1_91/dataset_160.pickle
+Web/dataset_160.pickle
+Web/dataset_224.pickle
+Web/dataset_64.pickle
+_dataset_128.pickle
+_dataset_160.pickle
+_dataset_224.pickle
+_dataset_32.pickle
+_dataset_64.pickle
+Web/MobileNetV2/Training/MobileNetV2/dataset_160.pickle
+Web/MobileNetV2/Training/MobileNetV2 0.35/dataset_160.pickle
+Web/MobileNetV2/Training/MobileNetV2 64x64 - 5/dataset_64.pickle
+Web/MobileNetV2/Transfere learning/MobileNetV2 224x224 - 0.35/dataset_224.pickle

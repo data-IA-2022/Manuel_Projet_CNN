@@ -18,8 +18,15 @@ from sklearn.metrics import confusion_matrix, precision_recall_fscore_support
 SIZE=160
 SEED=30
 
+import pathlib
+
+path=pathlib.Path(__file__).parent.absolute()
+path = str(path.parent.parent.parent) + "\dataset_" + str(SIZE) + ".pickle"
+
+print(path)
+
 # Ouverture des données avec pickl
-with open("dataset_" + str(SIZE)+".pickle", "rb") as f:
+with open(path, "rb") as f:
     data = pickle.load(f)
 
 # Conversion des données en DataFrame
@@ -34,7 +41,10 @@ train_df, test_df = train_test_split(df,
 # Import du modèle sauvegardé
 from tensorflow.keras.models import load_model
 
-model = load_model('model_resnet50.h5')
+model = load_model('model_MobileNetV2_Transfère_Learning.h5')
+
+model.summary()
+
  
 # Encodage des étiquettes avec LabelEncoder    
 le = LabelEncoder()
@@ -42,13 +52,6 @@ le = LabelEncoder()
 # Conversion des images et des étiquettes en tableaux Numpy
 val_images = np.array(test_df['images'].to_list())#/ 255.0
 val_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
-
-# Enregistrement des images de validation et des labels
-with open('val_images' + str(SIZE)+'.pickle', 'wb') as f:
-    pickle.dump(val_images, f)
-
-with open('val_labels' + str(SIZE)+'.pickle', 'wb') as f:
-    pickle.dump(val_labels, f)
 
 # Évaluation du modèle sur les données de validation
 pred_labels = np.argmax(model.predict(val_images), axis=-1)
