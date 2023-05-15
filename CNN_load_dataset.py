@@ -42,7 +42,7 @@ for SIZE in SIZE_list:
     df = pd.DataFrame(data)
     
     
-    with open("_dataset_" + str(SIZE)+".pickle", "wb") as f:
+    with open("dataset_" + str(SIZE)+".pickle", "wb") as f:
         pickle.dump(df, f)
 
     print("----------------------------------------")
