@@ -11,7 +11,6 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from tensorflow.keras import models, backend, layers
 from sklearn.preprocessing import LabelEncoder
-import matplotlib.pyplot as plt
 
 SIZE=160
 BATCH_SIZE = 15
@@ -84,6 +83,11 @@ with open('history.pickle', 'wb') as f:
 #vidage de la mémoire video du GPU
 backend.clear_session()
     
+# Import du modèle sauvegardé
+from tensorflow.keras.models import load_model
+
+model = load_model('model_.h5')
+
 model.evaluate(test_images,
                test_labels,
                batch_size= BATCH_SIZE)

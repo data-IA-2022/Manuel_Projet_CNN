@@ -97,6 +97,14 @@ plt.show()
 
 with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
+
+#vidage de la mémoire video du GPU
+clear_session()
+
+# Import du modèle sauvegardé
+from tensorflow.keras.models import load_model
+
+model = load_model('model_MobileNetV2_Transfère_Learning.h5')
     
 model.evaluate(test_images,
                test_labels,

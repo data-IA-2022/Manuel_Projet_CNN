@@ -92,7 +92,14 @@ model.save('model_resnet50.h5')
 
 with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
-    
+ 
+#vidage de la mémoire video du GPU
+tf.keras.backend.clear_session()
+
+# Import du modèle sauvegardé
+from tensorflow.keras.models import load_model
+
+model = load_model('model_.h5')
     
 model.evaluate(test_images,
                test_labels,

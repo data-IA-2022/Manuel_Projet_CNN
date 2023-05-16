@@ -89,18 +89,17 @@ model,train_images, train_labels, test_images, test_labels = initialize()
 history = process(model, train_images, train_labels, test_images, test_labels)
 model.save('model_MobileNetV2.h5')
 
-plt.figure()
-plt.plot(history.history["accuracy"])
-plt.plot(history.history["val_accuracy"])
-plt.ylim(0.5, 1)
-plt.yticks(np.arange(0.5, 1.1, 0.1))
-plt.legend(["training_"+ str(np.max(train_labels+1)), "test"])
-plt.savefig('Figure.jpeg',format='jpeg')
-plt.show()
-
 with open('history.pickle', 'wb') as f:
     pickle.dump(history.history, f)
-    
+
+#vidage de la mémoire video du GPU
+tf.keras.backend.clear_session()
+
+# Import du modèle sauvegardé
+from tensorflow.keras.models import load_model
+
+model = load_model('model_MobileNetV2.h5')
+
 score = model.evaluate(test_images,
                        test_labels,
                        batch_size= BATCH_SIZE)
