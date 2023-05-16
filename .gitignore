@@ -24,5 +24,12 @@ Web/CNN_V2_4_0_1_91/val_labels160.pickle
 Web/__pycache__
 Web/test_images160.pickle
 Web/test_labels160.pickle
+Web/dataset_3_128.pickle
+Web/dataset_3_160.pickle
+Web/dataset_3_224.pickle
+Web/dataset_3_32.pickle
+Web/dataset_3_64.pickle
 Dataset/PetImages/Cat
 Dataset/PetImages/Dog
+Dataset/PetImages 3 class/Cat
+Dataset/PetImages 3 class/Dog
