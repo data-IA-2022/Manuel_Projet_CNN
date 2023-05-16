@@ -12,6 +12,8 @@ import pickle
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, precision_recall_fscore_support
+from sklearn.metrics import roc_curve, auc
+from tensorflow.keras import backend
 
 
 # Paramètres
@@ -51,7 +53,20 @@ le = LabelEncoder()
   
 # Conversion des images et des étiquettes en tableaux Numpy
 val_images = np.array(test_df['images'].to_list())#/ 255.0
-val_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
+val_labels = le.fit_transform(np.array(test_df['labels'].to_list()))  
+
+# Évaluation du modèle sur les données de validation
+try:
+    pred_labels = model.predict_classes(val_images)
+    fpr, tpr, thresholds = roc_curve(val_labels, pred_labels[:, 1])
+except:
+    pred_pred = model.predict(val_images)
+    pred_labels = pred_pred.argmax(axis=-1)
+    fpr, tpr, thresholds = roc_curve(val_labels, pred_pred.argmax(axis=-1))
+    
+confusion_mtx = confusion_matrix(val_labels, pred_labels)
+
+auc_score = auc(fpr, tpr)  
 
 # Évaluation du modèle sur les données de validation
 pred_labels = np.argmax(model.predict(val_images), axis=-1)
@@ -98,3 +113,13 @@ plt.ylabel('Valeurs réelles')
 plt.tight_layout()
 plt.show() 
 
+plt.figure(figsize=(8, 8))
+plt.plot(fpr, tpr, label='Courbe ROC ' + str(round(auc_score, 3)))
+plt.xlabel('Taux de faux positifs')
+plt.ylabel('Taux de vrais positifs')
+plt.title('Courbe ROC')
+plt.legend()
+plt.show()
+
+#vidage de la mémoire video du GPU
+backend.clear_session()
