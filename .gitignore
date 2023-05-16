@@ -1,35 +1,12 @@
-﻿*.h5
-Web/CNN_V2_4_0_1_91/_test_images160.pickle
-Web/CNN_V2_4_0_1_91/_test_labels160.pickle
-Web/CNN_V2_4_0_1_91/_val_images160.pickle
-Web/CNN_V2_4_0_1_91/_val_labels160.pickle
-Web/CNN_V2_4_0_1_91/dataset_160.pickle
-Web/dataset_160.pickle
-Web/dataset_224.pickle
-Web/dataset_64.pickle
-_dataset_128.pickle
-_dataset_160.pickle
-_dataset_224.pickle
-_dataset_32.pickle
-_dataset_64.pickle
-Web/MobileNetV2/Training/MobileNetV2/dataset_160.pickle
-Web/MobileNetV2/Training/MobileNetV2 0.35/dataset_160.pickle
-Web/MobileNetV2/Training/MobileNetV2 64x64 - 5/dataset_64.pickle
-Web/MobileNetV2/Transfere learning/MobileNetV2 224x224 - 0.35/dataset_224.pickle
-Dataset/kagglecatsanddogs_5340 (1).zip
-Web/CNN_V2_4_0_1_91/roc_fpr.pickle
-Web/CNN_V2_4_0_1_91/roc_tpr.pickle
-Web/CNN_V2_4_0_1_91/val_images160.pickle
-Web/CNN_V2_4_0_1_91/val_labels160.pickle
-Web/__pycache__
-Web/test_images160.pickle
-Web/test_labels160.pickle
-Web/dataset_3_128.pickle
-Web/dataset_3_160.pickle
-Web/dataset_3_224.pickle
-Web/dataset_3_32.pickle
-Web/dataset_3_64.pickle
+﻿*.H5
+*.zip
+*dataset*.pickle
 Dataset/PetImages/Cat
 Dataset/PetImages/Dog
 Dataset/PetImages 3 class/Cat
 Dataset/PetImages 3 class/Dog
+Web/__pycache__
+Web/CNN_V2_4_0_1_91/_test_images160.pickle
+Web/CNN_V2_4_0_1_91/_test_labels160.pickle
+Web/CNN_V2_4_0_1_91/_val_images160.pickle
+Web/CNN_V2_4_0_1_91/_val_labels160.pickle
