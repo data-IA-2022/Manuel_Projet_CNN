@@ -1,10 +1,6 @@
 import streamlit as st
 import index
 
-# lst = ["Image 1", "Image 2", "Toutes les images de test"]
-
-# Chargement des images de test et des étiquettes
-images, labels = index.load_test_images()
 
 # Chargement des modèles CNN, de la liste de prédiction, de la liste de prédiction rejetée et de l'historique de l'apprentissage
 predict_list, predict_reject_list, lst_classes, history = index.load_CNN_V2_4_0_1_91()

@@ -34,19 +34,6 @@ def prediction_2(image, model):
     print(predicted_class)
     return pred
  
-# Fonction pour charger les images de test sauvegardées et leurs labels  
-@st.cache(suppress_st_warning=True)
-def load_test_images(SIZE=160, SEED=31):
-    import pickle
-  
-    with open("test_images" + str(SIZE)+".pickle", "rb") as f:
-        test_images = pickle.load(f)
-    
-    with open("test_labels" + str(SIZE)+".pickle", "rb") as f:
-        test_labels = pickle.load(f)
- 
-    return test_images, test_labels#, predict_list, predict_reject_list, lst_classes, history
-
 # Fonction pour charger les resultats précalculés 
 @st.cache(suppress_st_warning=True)
 def load_CNN_V2_4_0_1_91(SIZE=160, SEED=31):
