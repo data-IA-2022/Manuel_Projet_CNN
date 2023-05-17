@@ -42,6 +42,9 @@ train_labels = le.fit_transform(np.array(train_df['labels'].to_list()))
 test_images = np.array(test_df['images'].to_list())#/ 255.0
 test_labels = le.fit_transform(np.array(test_df['labels'].to_list()))
 
+with open('test_images160.pickle', 'wb') as f:
+    pickle.dump(test_images, f)
+
 model = models.Sequential()
 model.add(layers.Conv2D(65, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
 model.add(layers.MaxPool2D((2, 2)))
