@@ -52,8 +52,8 @@ le = LabelEncoder()
 # Conversion des images et des étiquettes en tableaux Numpy
 val_images = np.array(test_df['images'].to_list())#/ 255.0
 val_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
-    
-# Évaluation du modèle sur les données de validation
+
+# Évaluation du modèle sur les données de validation et de la courbe ROC
 try:
     pred_labels = model.predict_classes(val_images)
     fpr, tpr, thresholds = roc_curve(val_labels, pred_labels[:, 1])
@@ -64,11 +64,21 @@ except:
     
 confusion_mtx = confusion_matrix(val_labels, pred_labels)
 
+#Calcul du AUC-ROC
 auc_score = auc(fpr, tpr)
 
-# Sauvegarde de la matrice de confusion avec pickle
+# Évaluation du modèle sur les données de validation
+confusion_mtx = confusion_matrix(val_labels, pred_labels)
+
+# Sauvegarde de la matrice de confusion avec pickle et des data ROC
 with open('confusion_matrix.pickle', 'wb') as f:
     pickle.dump(confusion_mtx, f)
+
+with open('roc_fpr.pickle', 'wb') as f:
+    pickle.dump(fpr, f)
+    
+with open('roc_tpr.pickle', 'wb') as f:
+    pickle.dump(tpr, f)
 
 # Évaluation du modèle sur les données de validation
 score = model.evaluate(val_images,

@@ -13,6 +13,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, precision_recall_fscore_support
 from sklearn.metrics import roc_curve, auc
+from tensorflow.keras import backend
 
 # Paramètres
 SIZE=160
@@ -42,9 +43,9 @@ train_df, test_df = train_test_split(df,
 from tensorflow.keras.models import load_model
 
 model = load_model('model_resnet50.h5')
-
-model.summary()
  
+model.summary()
+
 # Encodage des étiquettes avec LabelEncoder    
 le = LabelEncoder()
   
@@ -52,7 +53,7 @@ le = LabelEncoder()
 val_images = np.array(test_df['images'].to_list())#/ 255.0
 val_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
 
-# Évaluation du modèle sur les données de validation
+# Évaluation du modèle sur les données de validation et de la courbe ROC
 try:
     pred_labels = model.predict_classes(val_images)
     fpr, tpr, thresholds = roc_curve(val_labels, pred_labels[:, 1])
@@ -63,22 +64,21 @@ except:
     
 confusion_mtx = confusion_matrix(val_labels, pred_labels)
 
+#Calcul du AUC-ROC
 auc_score = auc(fpr, tpr)
 
-# Enregistrement des images de validation et des labels
-with open('val_images' + str(SIZE)+'.pickle', 'wb') as f:
-    pickle.dump(val_images, f)
-
-with open('val_labels' + str(SIZE)+'.pickle', 'wb') as f:
-    pickle.dump(val_labels, f)
-
 # Évaluation du modèle sur les données de validation
-pred_labels = np.argmax(model.predict(val_images), axis=-1)
 confusion_mtx = confusion_matrix(val_labels, pred_labels)
 
-# Sauvegarde de la matrice de confusion avec pickle
+# Sauvegarde de la matrice de confusion avec pickle et des data ROC
 with open('confusion_matrix.pickle', 'wb') as f:
     pickle.dump(confusion_mtx, f)
+
+with open('roc_fpr.pickle', 'wb') as f:
+    pickle.dump(fpr, f)
+    
+with open('roc_tpr.pickle', 'wb') as f:
+    pickle.dump(tpr, f)
 
 # Évaluation du modèle sur les données de validation
 score = model.evaluate(val_images,
@@ -124,3 +124,6 @@ plt.ylabel('Taux de vrais positifs')
 plt.title('Courbe ROC')
 plt.legend()
 plt.show()
+
+#vidage de la mémoire video du GPU
+backend.clear_session()

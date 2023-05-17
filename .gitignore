@@ -10,3 +10,7 @@ Web/CNN_V2_4_0_1_91/_test_images160.pickle
 Web/CNN_V2_4_0_1_91/_test_labels160.pickle
 Web/CNN_V2_4_0_1_91/_val_images160.pickle
 Web/CNN_V2_4_0_1_91/_val_labels160.pickle
+Web/Resnet50/CNN Resnet50 train/val_images160.pickle
+Web/Resnet50/CNN Resnet50 train/val_labels160.pickle
+Web/Resnet50/CNN Trans Learn 244x244 batch_5/val_images224.pickle
+Web/Resnet50/CNN Trans Learn 244x244 batch_5/val_labels224.pickle
