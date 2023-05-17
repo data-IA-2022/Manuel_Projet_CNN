@@ -1,8 +1,4 @@
 import streamlit as st
-import urllib.request
-
-
-txt=""
 
 # Fonction pour charger un modèle sauvegardé
 @st.cache(suppress_st_warning=True)
@@ -23,6 +19,16 @@ def load_model_graf_CNN_V2_4_0_1_91(model):
     graf = cv2.imread('.\CNN_V2_4_0_1_91\modele.png')
    
     return graf
+
+# Fonction pour charger les images de test sauvegardées et leurs labels  
+@st.cache(suppress_st_warning=True)
+def load_test_images(SIZE=160, SEED=31):
+    import pickle
+  
+    with open("./CNN_V2_4_0_1_91/test_images" + str(SIZE)+".pickle", "rb") as f:
+        test_images = pickle.load(f)
+
+    return test_images
 
 # Fonction pour effectuer une prédiction sur une image donnée avec un modèle donné
 @st.cache(suppress_st_warning=True)
