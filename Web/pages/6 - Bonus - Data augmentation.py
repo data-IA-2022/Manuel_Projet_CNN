@@ -43,9 +43,11 @@ def plot_matrice_confus(path):
 st.markdown("<h1 style='text-align: center; color: grey;'>Bonus - Data augmentation</h1>", unsafe_allow_html=True)
 
 # Création de 2 onglets
-tab1, tab2, tab3 = st.tabs(["Custom CNN",
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Custom CNN",
                       "Resnet50", 
-                      "ModilNetV2"])
+                      "ModilNetV2",
+                      "Data Augmentation",
+                      "Code"])
 
 with tab1:
     st.title("Trainning.")
@@ -386,5 +388,102 @@ with tab3:
                 '''
         st.code(code, language='python')
        
+    with tab4:
         
+        st.title("Images d'origine.")
+        
+        col11, col12 = st.columns(2)
+        
+        with col11:
+            st.image("./Images/0.png")
+        
+        with col12:
+            st.image("./Images/0428fff264.jpg")
+        
+        st.title("Images augmentation.")
+        
+        col1, col2 = st.columns(2)
+
+        with col1:
+           st.image("./Images/augmented_1.jpg")
+           
+        with col2:
+           st.image("./Images/augmented_6.jpg")
+           
+        col21, col22 = st.columns(2)
+
+        with col21:
+           st.image("./Images/augmented_2.jpg")
+           
+        with col22:
+           st.image("./Images/augmented_7.jpg")
+        
+        col31, col32 = st.columns(2)
+
+        with col31:
+           st.image("./Images/augmented_3.jpg")
+           
+        with col32:
+           st.image("./Images/augmented_8.jpg")
+        
+        col41, col42 = st.columns(2)
+
+        with col41:
+           st.image("./Images/augmented_4.jpg")
+           
+        with col42:
+           st.image("./Images/augmented_9.jpg")
+        
+        col51, col52 = st.columns(2)
+
+        with col51:
+           st.image("./Images/augmented_5.jpg")
+           
+        with col52:
+           st.image("./Images/augmented_10.jpg")
+           
+    with tab5:
+        
+        st.title("Code d'augmentation.")
+        code = '''
+        # Appel de ImageDataGenerator pour créer un générateur d'augmentation de données.
+        datagen = ImageDataGenerator(rotation_range=90,
+                                     horizontal_flip=True,
+                                     brightness_range=[0.2,1.0],
+                                     zoom_range=[0.5,1.0],
+                                     width_shift_range=[-20,20],
+                                     height_shift_range=0.5)
+
+        # Boucle sur chaque fichier d'image dans le répertoire source
+        for filename in os.listdir(source_dir):
+            print(filename)
+            
+            # Chargement de l'image
+            img = load_img(os.path.join(source_dir, filename))
+            
+            # Conversion de l'image en tableau
+            data = img_to_array(img)
+            
+            # Expansion de la dimension pour un seul échantillon
+            samples = np.expand_dims(img, 0)
+
+            # Création d'un itérateur pour l'augmentation de données
+            it = datagen.flow(samples, batch_size=1)
+
+            # Application de l'augmentation de données et sauvegarde des images augmentées
+            for i in range(10):
+                k += 1
+                # Génération des images par lots
+                batch = it.next()
+
+                # N'oubliez pas de convertir ces images en entiers non signés pour les afficher
+                image = batch[0].astype('uint8')
+
+                # Sauvegarde de l'image augmentée
+                save_path = os.path.join(save_dir, f'augmented_{k}.jpg')
+                pyplot.imsave(save_path, image)
+                 '''
+        
+        st.code(code, language='python')
+         
                
