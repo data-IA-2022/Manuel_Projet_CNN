@@ -54,16 +54,25 @@ with tab1:
    
     st.title("Model.")
     code = '''
-    model = ResNet50 (include_top=True,
-                weights=None,
-                input_tensor=None,
-                input_shape=(SIZE,SIZE,3),
-                pooling='max',
-                classes=np.max(train_labels+1))
-    
-    Total params: 23,587,712
-    Trainable params: 23,534,592
-    Non-trainable params: 53,120
+    model = models.Sequential()
+    model.add(layers.Conv2D(65, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(128, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(256, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((3, 3)))
+
+    model.add(layers.Flatten())
+
+    model.add(layers.Dense(64, activation="relu"))
+    model.add(layers.Dense(64, activation="relu"))
+    model.add(layers.Dense(3, activation="softmax"))
             '''
     st.code(code, language='python')
    
@@ -102,16 +111,18 @@ with tab2:
    
     st.title("Model.")
     code = '''
-    model = ResNet50 (include_top=True,
-                weights=None,
-                input_tensor=None,
-                input_shape=(SIZE,SIZE,3),
-                pooling='max',
-                classes=np.max(train_labels+1))
-    
-    Total params: 23,587,712
-    Trainable params: 23,534,592
-    Non-trainable params: 53,120
+    model = Sequential()
+
+    model.add(ResNet50 (include_top=False,
+                      weights="imagenet",
+                      pooling='max'))
+
+    # model.add(Flatten())
+
+    model.add(Dense(64, activation="relu"))
+    model.add(Dense(64, activation="relu"))
+    model.add(Dense(2, activation = 'softmax'))
+    model.layers[0].trainable = False
             '''
     st.code(code, language='python')
    
@@ -153,16 +164,12 @@ with tab3:
        
         st.title("Model.")
         code = '''
-        model = ResNet50 (include_top=True,
-                    weights=None,
-                    input_tensor=None,
-                    input_shape=(SIZE,SIZE,3),
-                    pooling='max',
-                    classes=np.max(train_labels+1))
-        
-        Total params: 23,587,712
-        Trainable params: 23,534,592
-        Non-trainable params: 53,120
+       model=MobileNetV2(include_top=False,
+                         weights='imagenet',
+                         input_tensor=None,
+                         input_shape=(SIZE,SIZE,3),
+                         pooling='max',
+                         classes=np.max(yy_train+1))
                 '''
         st.code(code, language='python')
        
@@ -201,16 +208,13 @@ with tab3:
        
         st.title("Model.")
         code = '''
-        model = ResNet50 (include_top=True,
-                    weights=None,
-                    input_tensor=None,
-                    input_shape=(SIZE,SIZE,3),
-                    pooling='max',
-                    classes=np.max(train_labels+1))
-        
-        Total params: 23,587,712
-        Trainable params: 23,534,592
-        Non-trainable params: 53,120
+        model=MobileNetV2(include_top=False,
+                          weights='imagenet',
+                          alpha=0.35,
+                          input_tensor=None,
+                          input_shape=(SIZE,SIZE,3),
+                          pooling='max',
+                          classes=np.max(yy_train+1))
                 '''
         st.code(code, language='python')
        
