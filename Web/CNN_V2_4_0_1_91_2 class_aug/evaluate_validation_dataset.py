@@ -14,7 +14,6 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, precision_recall_fscore_support
 from sklearn.metrics import roc_curve, auc
 from tensorflow.keras import backend
-from sklearn.preprocessing import LabelBinarizer
 
 # Paramètres
 SIZE=160
@@ -23,7 +22,7 @@ SEED=30
 import pathlib
 
 path=pathlib.Path(__file__).parent.absolute()
-path = str(path.parent) + "\dataset_3_" + str(SIZE) + ".pickle"
+path = str(path.parent) + "\dataset_" + str(SIZE) + ".pickle"
 
 print(path)
 
@@ -45,37 +44,25 @@ from tensorflow.keras.models import load_model
 
 model = load_model('model_.h5')
  
-lb = LabelBinarizer()
-val_labels_one_hot = lb.fit_transform(np.array(test_df['labels'].to_list()))  
-
+# Encodage des étiquettes avec LabelEncoder    
+le = LabelEncoder()
+  
 # Conversion des images et des étiquettes en tableaux Numpy
 val_images = np.array(test_df['images'].to_list())#/ 255.0
+val_labels = le.fit_transform(np.array(test_df['labels'].to_list()))    
 
-
-# Calcul de la courbe ROC pour chaque classe
-fpr = dict()
-tpr = dict()
-thresholds = dict()
-n_classes = val_labels_one_hot.shape[1]
-
+# Évaluation du modèle sur les données de validation
 try:
     pred_labels = model.predict_classes(val_images)
+    fpr, tpr, thresholds = roc_curve(val_labels, pred_labels[:, 1])
 except:
-    pred_labels = model.predict(val_images)
+    pred_pred = model.predict(val_images)
+    pred_labels = pred_pred.argmax(axis=-1)
+    fpr, tpr, thresholds = roc_curve(val_labels, pred_pred.argmax(axis=-1))
     
-auc_score=[]
+confusion_mtx = confusion_matrix(val_labels, pred_labels)
 
-try:
-    for i in range(n_classes):
-        fpr[i], tpr[i], thresholds[i] = roc_curve(val_labels_one_hot[:, i], pred_labels)
-        auc_score.append(auc(fpr[i], tpr[i]))
-except:
-    pred_labels = pred_labels.argmax(axis=-1)
-    for i in range(n_classes):
-        fpr[i], tpr[i], thresholds[i] = roc_curve(val_labels_one_hot[:, i], pred_labels)
-        auc_score.append(auc(fpr[i], tpr[i]))
-
-confusion_mtx = confusion_matrix(np.argmax(val_labels_one_hot, axis=1), pred_labels)
+auc_score = auc(fpr, tpr)
 
 # Sauvegarde de la matrice de confusion avec pickle
 with open('confusion_matrix.pickle', 'wb') as f:
@@ -89,10 +76,10 @@ with open('roc_tpr.pickle', 'wb') as f:
 
 # Évaluation du modèle sur les données de validation
 score = model.evaluate(val_images,
-                        np.argmax(val_labels_one_hot, axis=1))
+                       val_labels)
 
 # Calcul du F-score
-precision, recall, f_score, _ = precision_recall_fscore_support(np.argmax(val_labels_one_hot, axis=1), pred_labels, average='weighted')
+precision, recall, f_score, _ = precision_recall_fscore_support(val_labels, pred_labels, average='weighted')
 
 
 performance = [precision, recall, f_score]
@@ -116,37 +103,21 @@ plt.figure(figsize=(8,8))
 plt.imshow(confusion_mtx, cmap=plt.cm.Blues)
 plt.title('Matrice de confusion')
 plt.colorbar()
-tick_marks = np.arange(len(lb.classes_))
-plt.xticks(tick_marks, lb.classes_, rotation=45)
-plt.yticks(tick_marks, lb.classes_)
+tick_marks = np.arange(len(le.classes_))
+plt.xticks(tick_marks, le.classes_, rotation=45)
+plt.yticks(tick_marks, le.classes_)
 plt.xlabel('Prédictions')
 plt.ylabel('Valeurs réelles')
 plt.tight_layout()
 plt.show() 
 
-for i in range(n_classes):
-    plt.figure(figsize=(8, 8))
-    plt.plot(fpr[i], tpr[i], label='Courbe ROC ' + str(round(auc_score[i], 3)))
-    plt.xlabel('Taux de faux positifs')
-    plt.ylabel('Taux de vrais positifs')
-    plt.title('Courbe ROC')
-    plt.legend()
-    plt.show()
-
 plt.figure(figsize=(8, 8))
-
-for i in range(n_classes):
-    plt.plot(fpr[i], tpr[i], label=f'Classe {i} (AUC = {auc(fpr[i], tpr[i]):.3f})')
-
-plt.plot([0, 1], [0, 1], 'k--')  # Ligne en pointillés représentant le classifieur aléatoire
-plt.xlim([0.0, 1.0])
-plt.ylim([0.0, 1.05])
+plt.plot(fpr, tpr, label='Courbe ROC ' + str(round(auc_score, 3)))
 plt.xlabel('Taux de faux positifs')
 plt.ylabel('Taux de vrais positifs')
-plt.title('Courbes ROC')
-plt.legend(loc='lower right')
+plt.title('Courbe ROC')
+plt.legend()
 plt.show()
-
 
 #vidage de la mémoire video du GPU
 backend.clear_session()
