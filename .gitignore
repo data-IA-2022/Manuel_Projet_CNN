@@ -17,3 +17,4 @@ Web/Resnet50/CNN Trans Learn 244x244 batch_5/val_labels224.pickle
 Web/CNN_V2_4_0_1_91/test_images160.pickle
 
 Dataset/PetImages 3 class augmente
+Web/Resnet50/CNN Resnet50 fine aug
