@@ -19,7 +19,7 @@ SEED = 30
 import pathlib
 
 path=pathlib.Path(__file__).parent.absolute()
-path = str(path.parent) + "\dataset_3_" + str(SIZE) + ".pickle"
+path = str(path.parent) + "\dataset_3_aug_horse_" + str(SIZE) + ".pickle"
 
 print(path)
 
