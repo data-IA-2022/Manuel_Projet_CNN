@@ -53,30 +53,6 @@ if with_data:
    
     st.plotly_chart(plot_train_graph(".\CNN_V2_4_0_1_91_3_class\\"), use_container_width=True)
    
-    st.title("Model.")
-    code = '''
-    model = models.Sequential()
-    model.add(layers.Conv2D(65, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(128, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(256, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((3, 3)))
-
-    model.add(layers.Flatten())
-
-    model.add(layers.Dense(64, activation="relu"))
-    model.add(layers.Dense(64, activation="relu"))
-    model.add(layers.Dense(3, activation="softmax"))
-            '''
-    st.code(code, language='python')
-   
     st.title("Performance.")
    
     col11, col12 = st.columns(2)
@@ -104,34 +80,72 @@ if with_data:
         st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
         st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")
         
+        
+    st.title("Model.")
+    code = '''
+   model = models.Sequential()
+   model.add(layers.Conv2D(65, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
+   model.add(layers.MaxPool2D((2, 2)))
+   model.add(layers.Conv2D(128, (2, 2), activation="relu"))
+   model.add(layers.MaxPool2D((2, 2)))
+   model.add(layers.Conv2D(256, (2, 2), activation="relu"))
+   model.add(layers.MaxPool2D((2, 2)))
+   model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
+   model.add(layers.MaxPool2D((2, 2)))
+   model.add(layers.Conv2D(880, (2, 2), activation="relu"))
+   model.add(layers.MaxPool2D((2, 2)))
+   model.add(layers.Conv2D(880, (2, 2), activation="relu"))
+   model.add(layers.MaxPool2D((3, 3)))
+
+   model.add(layers.Flatten())
+
+   model.add(layers.Dense(64, activation="relu"))
+   model.add(layers.Dense(64, activation="relu"))
+   model.add(layers.Dense(3, activation="softmax"))
+
+   model.summary()
+
+   print("Model")
+
+   optimizer="adamax"
+
+   # model.compile(loss='sparse_categorical_crossentropy', optimizer='Adam', metrics=['accuracy'])
+   model.compile(loss='sparse_categorical_crossentropy', optimizer='adamax', metrics=['accuracy'])
+
+   datagen = ImageDataGenerator(#rescale=1/255.,
+                                rotation_range=20,
+                                zoom_range=0.15,
+                                width_shift_range=0.2,
+                                height_shift_range=0.2,
+                                shear_range=0.15,
+                                horizontal_flip=True,
+                                validation_split=0.2)
+
+   training_generator = datagen.flow(xx_train, 
+                                     yy_train, 
+                                     batch_size=BATCH_SIZE,
+                                     subset='training',
+                                     seed=5)
+
+   validation_generator = datagen.flow(xx_train, 
+                                       yy_train, 
+                                       batch_size=BATCH_SIZE,
+                                       subset='validation',
+                                       seed=5)
+
+   history = model.fit_generator(training_generator,
+                                 steps_per_epoch=(len(xx_train)*0.8)//BATCH_SIZE, 
+                                 epochs=25, 
+                                 validation_data=validation_generator, 
+                                 validation_steps=(len(xx_train)*0.2)//BATCH_SIZE)
+            '''
+    st.code(code, language='python')
+   
+    
 else:
     st.title("Trainning.")
    
     st.plotly_chart(plot_train_graph(".\CNN_V2_4_0_1_91_3_class_aug_horse\\"), use_container_width=True)
-   
-    st.title("Model.")
-    code = '''
-    model = models.Sequential()
-    model.add(layers.Conv2D(65, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(128, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(256, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((2, 2)))
-    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
-    model.add(layers.MaxPool2D((3, 3)))
-
-    model.add(layers.Flatten())
-
-    model.add(layers.Dense(64, activation="relu"))
-    model.add(layers.Dense(64, activation="relu"))
-    model.add(layers.Dense(3, activation="softmax"))
-            '''
-    st.code(code, language='python')
    
     st.title("Performance.")
    
@@ -160,4 +174,42 @@ else:
         st.subheader("Precision : " + str(round(performance[0]*100, 3)) +" %")
         st.subheader("Recall : " + str(round(performance[1]*100, 3)) +" %")
         st.subheader("f_score : " + str(round(performance[2]*100, 3)) +" %")
+        
+    st.title("Model.")
+    code = '''
+    model = models.Sequential()
+    model.add(layers.Conv2D(65, (2, 2), activation="relu", input_shape=df.iloc[0][0].shape))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(128, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(256, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(512, (2, 2), activation="sigmoid"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((2, 2)))
+    model.add(layers.Conv2D(880, (2, 2), activation="relu"))
+    model.add(layers.MaxPool2D((3, 3)))
+
+    model.add(layers.Flatten())
+
+    model.add(layers.Dense(64, activation="relu"))
+    model.add(layers.Dense(64, activation="relu"))
+    model.add(layers.Dense(3, activation="softmax"))
+
+    model.summary()
+
+    model.compile(optimizer="adamax",#adamax,
+                  loss="SparseCategoricalCrossentropy",
+                  metrics=["accuracy"])
+
+    history = model.fit(train_images,
+                        train_labels,
+                        validation_split = 0.2,
+                        epochs = 25,
+                        batch_size= BATCH_SIZE)
+            '''
+    st.code(code, language='python')
+   
+   
 
